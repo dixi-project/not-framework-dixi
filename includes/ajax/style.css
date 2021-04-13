@@ -1,0 +1,12 @@
+body{
+    color:#FFF;
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
+    background: -moz-linear-gradient(160deg, #0093E9 0%, #80D0C7 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(160deg, #0093E9 0%, #80D0C7 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+  */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#0093E9', endColorstr='#80D0C7',GradientType=0 ); /* IE6-9 */
+}
+.contenedor{
+    height: 600px;
+}

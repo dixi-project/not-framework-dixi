@@ -1,0 +1,92 @@
+<style>
+
+   .nav-link{
+      
+      display: block;
+padding: .5rem 1rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+   }
+.d-lg-inline-block{
+
+   
+
+   display: inline-block !important;
+}
+
+</style>
+
+<header class="topnavbar-wrapper">
+    <!-- START Top Navbar-->
+    <nav role="navigation" class="navbar topnavbar">
+       <!-- START navbar header-->
+       <div class="navbar-header">
+          <a href="#/" class="navbar-brand">
+             <div class="brand-logo">
+                <img src="{{ pathSite }}design/{{ design }}/app/img/logo.png" alt="App Logo" class="img-responsive">
+             </div>
+             <div class="brand-logo-collapsed">
+                <img src="{{ pathSite }}design/{{ design }}/app/img/logo-single.png" alt="App Logo" class="img-responsive">
+             </div>
+          </a>
+       </div>
+       <!-- END navbar header-->
+       <!-- START Nav wrapper-->
+       <div class="nav-wrapper">
+          <!-- START Left navbar-->
+          <ul class="nav navbar-nav">
+             <li>
+                <!-- Button used to collapse the left sidebar. Only visible on tablet and desktops-->
+                <a href="#" data-toggle-state="aside-collapsed" class="hidden-xs">
+                   <em class="fa fa-navicon"></em>
+                </a>
+                <!-- Button to show/hide the sidebar on mobile. Visible on mobile only.-->
+                <a href="#" data-toggle-state="aside-toggled" data-no-persist="true" class="visible-xs sidebar-toggle">
+                   <em class="fa fa-navicon"></em>
+                </a>
+             </li>
+            
+          </ul>
+         
+
+          <!-- START Right Navbar-->
+          <ul class="nav navbar-nav navbar-right">
+             
+
+            
+            <li class="btn-group mb-sm">
+               <button type="button" data-toggle="dropdown" class="btn dropdown-toggle btn-default" style="background: none; border: none; color: white; margin-right: 2px; margin-top: 5px; width: 160px;">
+                 
+                  <img src="{{imagenLogo}}" alt="Image"  class=" img-circle thumb32">
+                  <div class="d-sm-none d-lg-inline-block ">{{Nombre|raw}}</div>
+                  <span class="caret" ></span>
+               </button>
+
+               <ul role="menu" class="dropdown-menu">
+                              <li >
+                                 <a href="{{ pathSite }}perfil">
+                                    <em class="fa fa-user"></em>
+                                    <span class="ml">Perfil</span>
+                                 </a>
+                              </li>
+
+                              <li class="divider"></li>
+                             
+                              <li >
+                            
+                                    <a href="{{ pathSite }}logout">
+                                       <em class="fa fa-mail-forward"></em>
+                                       <span class="ml">Salir</span>
+                                    </a>
+                                                       
+                              </li>
+                           </ul>
+            </li>
+          </ul>
+          <!-- END Right Navbar-->
+       </div>
+       <!-- END Nav wrapper-->
+     
+    </nav>
+    <!-- END Top Navbar-->
+ </header>

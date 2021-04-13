@@ -1,0 +1,115 @@
+{% include 'includes/header.html' %}
+
+   <div class="wrapper">
+      <!-- top navbar-->
+      {% include 'includes/header2.html' %}
+
+      {% include 'includes/nav.html' %}
+      <!-- Main section-->
+      <section>
+         <!-- Page content-->
+         <div class="content-wrapper">
+            <h3>PRODUCTOS Y SERVICIOS</h3>
+            <!-- START panel-->
+            <div id="panelDemo7" class="panel panel-default">
+               <div class="panel-body">
+                     
+                        <div class="row">
+                           <div class="col-md-12">
+                              <p>
+         
+                                 <div class="col-md-6">
+                                    <div class="form-group">
+                           <label for="input-id-1" style="padding-bottom: 0px;" class="col-sm-2 control-label">Categorias: </label>
+                           <div class="col-sm-10">
+                              <select class="chosen-select input-md form-control">
+                                 <optgroup label="PRODUCTOS">
+                                    <option>Jabon</option>
+                                    <option>Jabon</option>
+                                    <option>Jabon</option>
+                                    <option>Jabon</option>
+                                 </optgroup>
+                                 <optgroup label="SERVICIOS">
+                                    <option>Chicago Bears</option>
+                                    <option>Detroit Lions</option>
+                                    <option>Green Bay Packers</option>
+                                    <option>Minnesota Vikings</option>
+                                 </optgroup>
+                              </select>
+                           </div>
+                        </div>
+                                    
+                                 </div>
+                                 <div class="col-md-6 ">
+                                    <div class="input-group">
+                                       <input type="text" class="form-control text-center" placeholder="Buscar producto......">
+                                       <span class="input-group-btn" >
+                                          <button type="button" class="btn btn-default"><em class="fa fa-search"></em></button>
+                                       </span>
+                                    </div>
+                                    <!--<button type="button" class="form-control-rounded btn btn-info mb" style="text-align: right;">Buscar</button>-->
+                                 </div>
+                              </p>
+                              <hr>
+                              <br>
+                              
+                              
+                                 <div class="col-md-4">
+                                    <!-- START panel-->
+                                    <div id="panelDemo7" class="panel panel-default">
+                                       <div class="panel-heading text-center">Producto 1</div>
+                                       <div class="panel-body">
+                                          <img src="{{ pathSite }}design/{{ design }}/app/img/bg1.jpg" alt="" class="img-thumbnail img-responsive">
+                                          <p>Precio: $100.</p>
+                                          <p>Descripción:nuevo producto.</p>
+                                          <div class="text-center">   
+                                          <a href="{{ pathSite }}detalleproducto" class="btn btn-warning "><em class="fa fa-eye fa-fw"></em>Ver detalles</a>
+                                       </div>
+                                       </div>
+                                    </div>
+                                    <!-- END panel-->
+                                 </div>
+                                 <div class="col-md-4">
+                                    <!-- START panel-->
+                                    <div id="panelDemo7" class="panel panel-default">
+                                       <div class="panel-heading text-center">Producto 1</div>
+                                       <div class="panel-body">
+                                          <img src="{{ pathSite }}design/{{ design }}/app/img/bg1.jpg" alt="" class="img-thumbnail img-responsive">
+                                          <p>Precio: $100.</p>
+                                          <p>Descripción:nuevo producto.</p>
+                                          <div class="text-center">
+                                             <a href="{{ pathSite }}detalleproducto" class="btn btn-warning "><em class="fa fa-eye fa-fw"></em>Ver detalles</a>
+                                       </div>
+                                       </div>
+                                    </div>
+                                    <!-- END panel-->
+                                 </div>
+                                 <div class="col-md-4">
+                                    <!-- START panel-->
+                                    <div id="panelDemo7" class="panel panel-default">
+                                       <div class="panel-heading text-center">Producto 1</div>
+                                       <div class="panel-body">
+                                          <img src="{{ pathSite }}design/{{ design }}/app/img/bg1.jpg" alt="" class="img-thumbnail img-responsive">
+                                          <p>Precio: $100.</p>
+                                          <p>Descripción:nuevo producto.</p>
+                                          <div class="text-center">
+                                             <a href="{{ pathSite }}detalleproducto"  class="btn btn-warning "><em class="fa fa-eye fa-fw"></em>Ver detalles</a>
+                                       </div>
+                                       </div>
+                                    </div>
+                                    <!-- END panel-->
+                                 </div>  
+                           </div>
+                        </div>
+               </div>
+            </div>
+            <!-- END panel-->
+            
+         </div>
+      </section>
+      <!-- Page footer-->
+      <footer>
+         <span>&copy; 2015 - Angle</span>
+      </footer>
+   </div>
+   {% include 'includes/footer.html' %}

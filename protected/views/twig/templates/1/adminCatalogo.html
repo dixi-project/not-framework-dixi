@@ -1,0 +1,106 @@
+{% include 'includesAdmin/header.html' %}
+<div id="page-wrapper">
+    {% include 'includesAdmin/header2.html' %}
+    <div id="page-content-wrapper">
+        <div id="page-content">
+            <div class="container">
+                
+                <div class="panel">
+                    <form id="frm1" name="frm1" action="{{pathCMSSite}}agregar" method="post">
+                        <input type="hidden" name="Dominio" id="Dominio" value="{{dominio}}">
+                        <input type="hidden" name="idReg" id="idReg" value="">
+                        <input type="hidden" name="Action" id="Action" value="">
+                        <input type="hidden" name="path" id="path" value="{{pathCMSSite}}">
+                        <div class="panel-heading">
+                            <div id="page-title"  style="float: left;padding-top: 5px;">
+                                <h2>{{dominio|upper|replace({"_":" "})}}</h2>
+                            </div>    
+                            <div class="text-right">
+                                <button class="btn btn-labeled btn-primary" type="submit">
+                                    <span class="btn-label">
+                                        <i class="glyph-icon icon-plus"></i>
+                                    </span> Agregar
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="panel-body">
+                          
+                            <div class="example-box-wrapper">
+
+                                <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="datatable-example">
+                                    <thead>
+                                        <tr>
+                                            {% for keyx, value in campos %}
+                                                {% if value == "Clave" or  value == "Desarrollo" or keyx == "llave" or keyx == "notas" or keyx == "direccion" or keyx == "token" %}
+
+                                                {% else %}
+                                                    <th class="">{{ value|replace({"_":" "}) }}</th>
+
+                                                {% endif %}
+                                            {% endfor %}
+                                            {% if dominio == "plantilla" %}
+                                                <th class="">URL Agradecimiento</th>
+                                            {% endif %}
+                                            <th class="">Accion</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for key, value in datos %}
+                                            {% if dominio == "user_has_servicio" and value.idref == "" %}
+                                                
+                                            {% else %}
+                                                <tr class="gradeX">
+                                                    {% for k, v in campos %}
+                                                        {% if v == "Clave" or v == "Desarrollo" or k == "llave" or k == "notas" or k == "direccion"  or k == "token" %}
+
+                                                        {% else %}
+                                                            
+                                                            {% if value.relaciones[k] != NULL %}
+                                                                {% for krr, vr in value.relaciones[k] %}
+                                                                    {% if krr == value[k] %}
+                                                                        <td>{{vr}}</td>
+                                                                    {% endif %}
+                                                                {% endfor %}   
+                                                            {% else %}
+                                                                <td>{{ value[k] }}</td>
+                                                            {% endif %}
+                                                        {% endif %}
+                                                    {% endfor %}
+                                                    <td>
+                                                        <button class="btn btn-labeled btn-info" type="button" onclick="clickBtn({{value.id}}, 'edit','editar','frm1')">
+                                                            <span class="btn-label">
+                                                                <i class="glyph-icon icon-edit"></i>
+                                                            </span>
+                                                            Editar
+                                                        </button>
+                                                        <button class="btn btn-labeled btn-danger" type="button" onclick="clickBtn({{value.id}}, 'delete','update-catalogo','frm1')">
+                                                            <span class="btn-label">
+                                                                <i class="glyph-icon icon-times"></i>
+                                                            </span>
+                                                            Eliminar
+                                                        </button>
+
+                                                        {% if dominio == "evento" %}
+                                                        <button class="btn btn-labeled btn-success" type="button" onclick="clickBtn({{value.id}}, 'bloquear', 'admin-evento','frm1')">
+                                                            <span class="btn-label">
+                                                                <i class="fa fa-cog"></i>
+                                                            </span>
+                                                            Administrar Evento
+                                                        </button>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% include 'includesAdmin/footerJS.html' %}

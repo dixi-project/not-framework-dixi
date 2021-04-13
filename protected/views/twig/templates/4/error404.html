@@ -1,0 +1,32 @@
+{% include 'includes/header.html' %}
+	<body class="bg-light">
+		<div id="app" class="page">
+			<section class="section">
+                <div class="container mt-5">
+					<div class="single-page weather">
+						<div class="page-error text-white ">
+							<div class="page-inner">
+								<h1>404</h1>
+								<div class="page-description">
+									Lo sentimos, se ha producido un error, no se ha encontrado la página solicitada.
+								</div>
+								<div class="page-search">
+									<div class="mt-3">
+										<a href="{{ pathSite }}home" class="btn btn-success">Regresar a Inicio</a>
+									</div>
+								</div>
+							</div>
+                        </div>
+                        
+                        <div class="simple-footer mt-5 text-white">
+                            Copyright &copy; {{year}} - {{createby}}
+                        </div>
+					</div>
+				</div>
+			</section>
+		</div>
+
+        {% include 'includes/footer.html' %}
+
+	</body>
+</html>

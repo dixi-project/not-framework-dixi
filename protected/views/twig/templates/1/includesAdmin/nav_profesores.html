@@ -1,0 +1,45 @@
+<div id="page-sidebar">
+    <div class="scroll-sidebar">
+        <ul id="sidebar-menu">
+            <li class="header"><span>Menú</span></li>
+            <li>
+                <a href="{{ pathCMSSite }}dashboard" title="Admin Dashboard">
+                    <i class="glyph-icon icon-linecons-tv"></i>
+                    <span>Admin dashboard</span>
+                </a>
+            </li>
+            <li class="divider"></li> 
+            <li class="header"><span>Administración</span></li>
+
+            {% if quien_evalua == 2 %}
+            <li>
+                <a href="{{ pathCMSSite }}#" title="Generales">
+                    <i class="glyph-icon icon-gear"></i>
+                    <span>Generales</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li><a href="{{ pathCMSSite }}tipo-evaluar-grupo" title="Tipo de evaluación por grupo" class=""><span>Tipo de evaluación por grupo</span></a></li>
+                        <li><a href="{{ pathCMSSite }}evaluar-grupo" title="Evaluación por grupo" class=""><span>Evaluación por grupo</span></a></li>
+                    </ul>
+                </div>
+            </li>
+            {% endif %} 
+
+            <li>
+                <a href="{{ pathCMSSite }}#" title="Capturas">
+                    <i class="glyph-icon icon-edit"></i>
+                    <span>Capturas</span>
+                </a>
+                <div class="sidebar-submenu">
+                    <ul>
+                        <li><a href="{{ pathCMSSite }}evaluar-dia" title="Capturar día" class=""><span>Evaluar día</span></a></li>
+                        <li><a href="{{ pathCMSSite }}asistencia" title="Asistencia día" class=""><span>Asistencia día</span></a></li>
+                        <li><a href="{{ pathCMSSite }}capturar-tareas" title="Capturar Tarea" class=""><span>Capturar Tarea</span></a></li>
+                        
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

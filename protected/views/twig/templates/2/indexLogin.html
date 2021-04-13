@@ -1,0 +1,55 @@
+{% include 'includes/header.html' %}
+<link rel="stylesheet" href="{{ pathSite }}includes/css/personalizado.css">
+<div id="page-login">
+   <div class="wrapper">
+      <div class="block-center mt-xl wd-xl">
+         <!-- START panel-->
+         <div class="panel panel panel-flat" id="login">
+            <div class="panel-heading text-center">
+               <a href="#">
+                  <img src="{{ pathSite }}/includes/img/logo.png" alt="Image" class="block-center img-rounded" width="100">
+               </a>
+            </div>
+            <div class="panel-body">
+               <form role="form" data-parsley-validate="" novalidate="" class="mb-lg" action="login" method="post">
+                  
+                  <div class="form-group has-feedback">
+                     <input id="email" type="email" placeholder="Enter email" autocomplete="off" required class="form-control" name="username" id="username">
+                     <span class="fa fa-envelope form-control-feedback text-muted"></span>
+                  </div>
+
+                  <div class="form-group has-feedback">
+                     <input id="password" type="password" placeholder="Password" required class="form-control" name="pwd" id="pwd">
+                     <span class="fa fa-lock form-control-feedback text-muted"></span>
+                  
+                  </div>
+
+                  <div class="clearfix">
+                     <div class="checkbox c-checkbox pull-left mt0">
+                        <label>
+                           <input type="checkbox" value="" name="remember">
+                           <span class="fa fa-check"></span>
+                           Recuérdame</label>
+                     </div>
+                     
+                  </div>
+                  <button type="submit" class="btn btn-block btn-primary mt-lg">Entrar</button>
+                  <div class="text-center mt-lg"><a href="#" class="text-muted">¿Olvidaste tu contraseña?</a>
+                  </div>
+               </form>
+               
+            </div>
+         </div>
+         <!-- END panel-->
+         <div class="p-lg text-center" id="dere">
+            <span>&copy;</span>
+            <span>2020</span>
+            <span>-</span>
+            <span>Dixi Project</span>
+            <span>-</span>
+            <span>Todos los derechos</span>
+         </div>
+      </div>
+   </div>
+</div>
+   {% include 'includes/footer.html' %}

@@ -1,0 +1,61 @@
+{% include 'includesHome/header.html' %}
+<body>
+<div id="loading">
+    <div class="spinner">
+        <div class="bounce1"></div>
+        <div class="bounce2"></div>
+        <div class="bounce3"></div>
+    </div>
+</div>
+<style type="text/css">
+    html,body {
+        height: 100%;
+        background: #fff;
+        overflow: hidden;
+    }
+</style>
+<script type="text/javascript" src="assets/widgets/wow/wow.js"></script>
+<script type="text/javascript">
+    wow = new WOW({
+        animateClass: 'animated',
+        offset: 100
+    });
+    wow.init();
+</script>
+<img src="assets/image-resources/blurred-bg/blurred-bg-2.jpg" class="login-img wow fadeIn" alt="">
+<div class="center-vertical">
+    <div class="center-content row">
+        <div class="col-md-3 center-margin">
+            <form method="post" action="recuperar-password" name="frm1" id="frm1" autocomplete="off">
+                <div class="content-box wow bounceInDown modal-content">
+                    <h3 class="content-box-header content-box-header-alt bg-default">
+                        <span class="icon-separator">
+                            <i class="glyph-icon icon-user"></i>
+                        </span>
+                        <span class="header-wrapper">
+                            &nbsp;
+                            <small>&nbsp;</small>
+                        </span>
+                        <span class="header-buttons">
+                            <img src="assets/image-resources/logo.png" class="wow fadeIn right" alt="" width="180">
+                        </span>
+                    </h3>
+                    <div class="content-box-wrapper">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <input type="email" class="form-control" name="NtxtMail" id="NtxtMail" placeholder="Su correo">
+                                <span class="input-group-addon bg-blue">
+                                    <i class="glyph-icon icon-envelope-o"></i>
+                                </span>
+                            </div>
+                        </div>
+                        <button class="btn btn-info btn-block" type="submit">Re-enviar clave</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    {% include 'includesHome/footerJS.html' %}
+</div>
+</body>
+</html>

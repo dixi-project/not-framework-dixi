@@ -1,0 +1,84 @@
+{% include 'includes/header.html' %}
+<body class="bg-light">
+    <div id="app" class="page">
+        <section class="section section-2">
+            <div class="container">
+                <div class="row">
+                    <div class="single-page single-pageimage construction-bg cover-image " data-image-src="{{ pathSite }}design/{{ design }}/assets/img/weather1.jpeg">
+                        <div class="row">
+                            <div class="col-lg-6 col-xl-6">
+                                <div class="mt-xl-5">
+                                    <div class="bg-transparent carouselTestimonial1 p-4 mx-auto mt-xl-5 mb-3 w-600">
+                                        <div id="carouselTestimonial" class="carousel carousel-testimonial slide" data-ride="carousel">
+                                            <ol class="carousel-indicators carousel-indicators1">
+                                                <li data-target="#carouselTestimonial" data-slide-to="0" class="active"></li>
+                                                <li data-target="#carouselTestimonial" data-slide-to="1"></li>
+                                                <li data-target="#carouselTestimonial" data-slide-to="2"></li>
+                                            </ol>
+                                            <div class="carousel-inner">
+                                                <div class="carousel-item text-center active">
+                                                    <img src="{{ pathSite }}design/{{ design }}/assets/img/brand/logo-white.png" class="mb-2  mt-lg-0 " alt="logo">
+                                                    <p class="m-0 pt-2 text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, consectetur adipiscing elit varius quam at, luctus dui. Mauris magna metus consectetur adipiscing elit.</p>
+                                                </div>
+                                                <div class="carousel-item text-center">
+                                                    <img src="{{ pathSite }}design/{{ design }}/assets/img/brand/logo-white.png" class="mb-2  mt-lg-0 " alt="logo">
+                                                    <p class="m-0 pt-2 text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, consectetur adip varius quam at, luctus dui. Mauris magna metus, dapibus nec turpis vel.</p>
+                                                </div>
+                                                <div class="carousel-item text-center">
+                                                    <img src="{{ pathSite }}design/{{ design }}/assets/img/brand/logo-white.png" class="mb-2  mt-lg-0 " alt="logo">
+                                                    <p class="m-0 pt-2 text-white">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam eu sem tempor, varius quam at, consectetur adipiscing elit consectetur adipiscing elit luctus dui. Mauris magna metus.</p>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-xl-6">
+                                <div class="login-sec">
+                                    <div class=" text-center card mb-0">
+                                        <form id="login" class="card-body" tabindex="500" action="login" method="post">
+                                            <h4 class="mb-3">Login</h4>
+                                            <div class="">
+                                                <div class="form-group">
+                                                    <input type="email" class="form-control" id="username" name="username" placeholder="Enter email">
+                                                </div>
+                                                <div class="form-group">
+                                                    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Password">
+                                                </div>
+                                                <div class="checkbox">
+                                                    <div class="custom-checkbox custom-control">
+                                                        <input type="checkbox" data-checkboxes="mygroup" class="custom-control-input" id="checkbox-1">
+                                                        <label for="checkbox-1" class="custom-control-label">Check me Out</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="submit mt-3 mb-3">
+                                                <button class="btn btn-primary btn-block"  type="submit" name="btn1" id="btn1" value="Entrar" >
+                                                    Entrar
+                                                    </button>
+                                            </div>
+                                            <p class="mb-2"><a href="forgot.html">Forgot Password</a></p>
+                                            <p class="text-muted mb-0">Don't have account?<a href="register.html" class="text-primary ml-1">Sign UP</a></p>
+                                        </form>
+                                        <div class="flex-c-m text-center mb-4">
+                                            <button type="button" class="btn btn-facebook"><i class="fa fa-facebook mr-2"></i>Facebook</button>
+                                            <button type="button" class="btn btn-google"><i class="fa fa-google mr-2"></i>Google</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+				
+       
+
+	
+        {% include 'includes/footer.html' %}
+	</body>
+</html>

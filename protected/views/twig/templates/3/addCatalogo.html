@@ -1,0 +1,189 @@
+{% include 'includes/header.html' %}
+<body class="app">
+  <div id="spinner"></div>
+  <div id="app" class="page">
+    <div class="main-wrapper page-main">
+      {% include 'includes/header2.html' %} {% include 'includes/nav.html' %}
+      <div class="app-content">
+        <div class="section">
+          {% include 'includes/breadcrumbs.html' %}
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card">
+                <div class="card-header">
+                  <h4>{{accion}} &nbsp; {{dominio|capitalize}}</h4>
+                </div>
+                <div class="card-body">
+                  <form
+                    id="frm1"
+                    name="frm1"
+                    action="{{pathCMSSite}}update-catalogo"
+                    method="post"
+                    enctype="multipart/form-data"
+                  >
+                    <input
+                      type="hidden"
+                      name="Dominio"
+                      id="txtDominio"
+                      value="{{dominio}}"
+                    />
+                    <input
+                      type="hidden"
+                      name="idReg"
+                      id="idReg"
+                      value="{{idReg}}"
+                    />
+                    <input type="hidden" name="Action" id="Action" value="" />
+                    <input
+                      type="hidden"
+                      name="path"
+                      id="path"
+                      value="{{pathCMSSite}}"
+                    />
+
+
+
+                    {% set continue = false %}
+                    {% for key, value in campos %}
+                        {% if key == "id" or key == "fecha" or key == "user_id" %}
+                            {% set continue = true %}
+                        {% endif %} 
+                        {% if not continue %}
+                   
+                        <div class="form-group row">
+                            <label class="col-md-2 col-form-label">
+                            {{value.nombre}}
+                            </label>
+                            <div class="col-md-10">
+                                {% if value.tipo == "varchar" %}
+                                    {% if key == "correo" %}
+                                        <input type="email" class="form-control " maxlength="{{value.size}}" id="txt{{key}}" name="txt{{key}}" value="{{datos.0[key]}}">
+                                    {% elseif key == "password" %}
+                                        <input type="password" class="form-control " maxlength="{{value.size}}" id="txt{{key}}" name="txt{{key}}" >
+                                    {% else %}
+                                        <input type="text" class="form-control" maxlength="{{value.size}}" id="txt{{key}}" name="txt{{key}}" value="{{datos.0[key]}}">
+                                    {% endif %} 
+                                {% endif %} 
+                                {% if value.tipo == "datetime" %}
+                                    <div id="" class="input-group date datetimepicker1">
+                                        <input type="text" class="form-control " maxlength="" id="txt{{key}}" name="txt{{key}}" value="{{datos.0[key]}}">
+                                        <span class="input-group-addon">
+                                           <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                {% endif %} 
+                                {% if value.tipo == "date" %}
+                                    <div id="" class="input-group date datetimepicker1">
+                                        <input type="text" class="form-control " maxlength="" id="txt{key}" name="txt{{key}}" value="{{now_calendar}}" >
+                                        <span class="input-group-addon">
+                                           <span class="fa fa-calendar"></span>
+                                        </span>
+                                    </div>
+                                {% endif %} 
+                                {% if value.tipo == "int" %}
+                                    {% if value.relaciones.0 == NULL %}
+                                        <input type="number" class="form-control" maxlength="{{value.size}}" id="txt{{key}}" name="txt{{key}}" value="{{datos.0[key]}}">
+                                    {% else %} 
+                                        {% set campoR = value.relaciones.0.campoReturn.0 %}
+                                        
+                                        
+                                        
+                                        <select class="form-control" id="txt{{key}}" name="txt{{key}}">
+                                            {% for keyR, valueR in value.relaciones.1 %}
+                                                {% if datos.0[key] == valueR.id %}
+                                                    <option value="{{valueR.id}}" selected>{{valueR[campoR]}}</option>
+                                                {% else %} 
+                                                    <option value="{{valueR.id}}">{{valueR[campoR]}}</option>
+                                                {% endif %} 
+                                            {% endfor %}
+                                        </select>
+                                    {% endif %} 
+                                {% endif %}
+                                {% if value.tipo == "text" or value.tipo == "longtext" %}
+                                    {% if dominio=="plantilla" %}
+                                        <textarea class="form-control" id="txt{{key}}" name="txt{{key}}">{{datos.0[key]}}</textarea>
+                                    {% else %} 
+                                        <textarea class="form-control mceEditor" id="txt{{key}}" name="txt{{key}}">{{datos.0[key]}}</textarea>
+                                    {% endif %} 
+                                {% endif %} 
+                                {% if value.tipo == "decimal" %}
+                                    <input type="text" class="form-control" maxlength="{{value.size}}" id="txt{{key}}" name="txt{{key}}" value="{{datos.0[key]}}">
+                                {% endif %} 
+                            </div>
+                        </div>
+                        {% endif %} 
+                        {% if continue %}
+                            {% set continue = false %}
+                        {% endif %}
+                    {% endfor %}
+                    
+                    
+                    {% if HasCampos != "" %}
+                        {% for key, value in HasCampos %}
+                        
+                        <div class="form-group row">
+                                    <label class="col-md-2 col-form-label">{{value.nombre}}</label>
+                                    <div class="col-md-10">
+                                        
+                                            {% for ke, va in value.registros %}
+                                                {% set selected = "" %}
+                                                {% for k2, v2 in value.registrosActuales %}
+                                                    {% if va.id == v2.2 %}
+                                                        {% set selected = "selected" %}
+                                                    {% endif %} 
+                                                {% endfor %}
+                                               
+                                            {% endfor %}
+                                            
+                                        <select id="Xrel{{value.name}}" name="Xrel{{value.name}}[]" multiple="" class="form-control select2-3">
+                                            {% for ke, va in value.registros %}
+                                                {% set selected = "" %}
+                                                {% for k2, v2 in value.registrosActuales %}
+                                                    {% if va.id == v2.2 %}
+                                                        {% set selected = "selected" %}
+                                                    {% endif %} 
+                                                {% endfor %}
+                                               <option value="{{va.id}}" {{selected}}>{{va.1}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                        {% endfor %}
+                    {% endif %} 
+                    {% if isImg %}  
+                    <div class="form-group row">
+                             <label class="col-md-2 col-form-label">Imagen:</label>
+                             <div class="col-md-10">
+                                 <input type="file" data-classbutton="btn btn-default" data-classinput="form-control inline" class="form-control filestyle"  id="txFile" name="txFile">
+                             </div>
+                        </div>
+                    {% endif %} 
+                    <div class="form-group row">
+                        <br>
+                        <div class="col-lg-offset-2 col-lg-10">
+                            <button type="button" class="btn btn-sm btn-info" name="cmdRegresar" id="cmdRegresar" data-action="catalogo/{{dominio}}" value="1">
+                                <i class="glyph-icon icon-angle-double-left"></i>
+                                Regresar
+                            </button>
+                            <button type="submit" class="btn btn-sm btn-success" name="cmdGuardar">
+                                <i class="glyph-icon icon-save"></i>
+                                Guardar</button>
+                        </div>
+                     </div>     
+           </div>
+          </div>
+
+
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% include 'includes/footer2.html' %}
+    </div>
+  </div>
+  {% include 'includes/footer.html' %}
+</body>

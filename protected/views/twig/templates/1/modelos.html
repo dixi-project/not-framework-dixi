@@ -1,0 +1,452 @@
+{% include 'includesAdmin/header.html' %}
+<div id="page-wrapper">
+  {% include 'includesAdmin/header2.html' %}
+
+  <div id="page-content-wrapper">
+    <div id="page-content">
+      <div class="container">
+        <div id="page-title">
+          <h2>Modelos</h2>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="panel">
+              <div class="panel-body">
+                <h3 class="title-hero">Entidades</h3>
+                <div class="example-box-wrapper">
+                  <div class="panel-group" id="accordion">
+                    <input
+                      type="hidden"
+                      name="path"
+                      id="path"
+                      value="{{pathSite}}"
+                    />
+                    
+                    {% for keyx, value in tables %}
+
+                    <div class="panel">
+                      <div class="panel-heading">
+                        <h4 class="panel-title">
+                          <a
+                            data-toggle="collapse"
+                            data-parent="#accordion"
+                            href="#{{value.conf_table}}"
+                          >
+                            {{value.name}}
+                          </a>
+                        </h4>
+                      </div>
+                      <div
+                        id="{{value.conf_table}}"
+                        class="panel-collapse collapse"
+                      >
+                        <div>
+                          <!-- Nav tabs -->
+                          <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active">
+                              <a
+                                href="#stucture_{{value.conf_table}}"
+                                aria-controls="stucture_{{value.conf_table}}"
+                                role="tab"
+                                data-toggle="tab"
+                                >Estructura</a
+                              >
+                            </li>
+                            <li role="presentation">
+                              <a
+                                href="#vista_rapida_{{value.conf_table}}"
+                                aria-controls="vista_rapida_{{value.conf_table}}"
+                                role="tab"
+                                data-toggle="tab"
+                                >Vistas</a
+                              >
+                            </li>
+                            <li role="presentation">
+                              <a
+                                href="#names_fields_{{value.conf_table}}"
+                                aria-controls="names_fields_{{value.conf_table}}"
+                                role="tab"
+                                data-toggle="tab"
+                                >Campos</a
+                              >
+                            </li>
+                            <li role="presentation">
+                              <a
+                                href="#names_update_{{value.conf_table}}"
+                                aria-controls="names_update_{{value.conf_table}}"
+                                role="tab"
+                                data-toggle="tab"
+                                >Guardar</a
+                              >
+                            </li>
+                          </ul>
+
+                          <!-- Tab panes -->
+                          <div class="tab-content">
+                            <div
+                              role="tabpanel"
+                              class="tab-pane active"
+                              id="stucture_{{value.conf_table}}"
+                            >
+
+                            <form class="form-horizontal bordered-row">
+                              <input
+                                  type="hidden"
+                                  id="nestable-output_{{value.conf_table}}"
+                                  name="nestable-output_{{value.conf_table}}"
+                                />
+                              <div class="form-group">
+                                  <label class="col-sm-3 control-label">Nombre de Entidad:</label>
+                                  <div class="col-sm-6">
+                                  <input type="text"
+                                  name="nameEntity_{{value.conf_table}}"
+                                  id="nameEntity_{{value.conf_table}}"
+                                  value="{{value.name}}"
+                                  class="form-control txtNameEntity"
+                                  data-tableid="{{value.id}}"
+                                />
+                                  </div>
+                              </div>
+
+                              <div class="form-group">
+                                <label class="col-sm-3 control-label">Solicitar Imagen Princial</label>
+                                  <div class="col-sm-1">
+                                    <input
+                                  type="checkbox"
+                                  class="form-control imgPrincipal"
+                                  data-tableid="{{value.id}}"
+                                  {%  if  value.img == 1 %}  checked  {%  endif  %}
+                                />
+                                    </div>
+                              </div>
+
+                              <div class="form-group">
+                                <label class="col-sm-3 control-label">Solicitar PDF</label>
+                                  <div class="col-sm-1">
+                                    <input
+                                  type="checkbox"
+                                  class="form-control pdfPrincipal"
+                                  data-tableid="{{value.id}}"
+                                  {%  if  value.pdf == 1 %}  checked  {%  endif  %}
+                                />
+                                    </div>
+                              </div>
+
+                              <div class="form-group">
+                                <label class="col-sm-3 control-label">Archivos:</label>
+                                  <div class="col-sm-6">
+                                    <input
+                                    type="text"
+                                    name="numFile_{{value.conf_table}}"
+                                    id="numFile_{{value.conf_table}}"
+                                    value="{{value.files}}"
+                                    class="form-control txtNumFile"
+                                    data-tableid="{{value.id}}"
+                                  />
+                                    </div>
+                              </div>
+                            </form>
+                              <hr />
+                              <!--
+                                                            <h3>Orden de campos</h3>
+                                                            <div class="dd" id="nestable_{{value.conf_table}}">
+                                                                <ol class="dd-list">
+                                                                    {% set continue = false %}
+                                                                    {% for key1, val1 in value %}
+                                                                        {% if val1.Field == "id" %}
+                                                                            {% set continue = true %}
+                                                                        {% endif %}
+                                                                        {% if not continue %}
+                                                                            <li class="dd-item" data-id="{{value.conf_table}}_{{key1}}">
+                                                                                <div class="dd-handle"><b>{{ val1.Field }}</b> ({{ val1.Type }}) </div>
+                                                                            </li>
+                                                                        {% endif %}
+                                                                        {% if continue %}
+                                                                            {% set continue = false %}
+                                                                        {% endif %}
+                                                                   {% endfor %}
+                                                                </ol>
+                                                            </div>
+                                                            -->
+                            </div>
+                            <div
+                              role="tabpanel"
+                              class="tab-pane"
+                              id="vista_rapida_{{value.conf_table}}"
+                            >
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>Campo</th>
+                                    <th style="text-align: center;">Vista Agregar</th>
+                                    <th style="text-align: center;">Vista Editar</th>
+                                    <th style="text-align: center;">Vista Detalle</th>
+                                    <th style="text-align: center;">Vista Rápida</th>
+                                    <th style="text-align: center;">Vista Reporte</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {% set continue = false %} 
+                                  {% for key1, val1  in value["fields"] %} 
+                                    {% if val1.conf_field == "id" %} 
+                                        {% set continue = true %} 
+                                    {% endif %}
+                                    {% if not continue %}
+                                    <tr>
+                                        <td>{{ val1.conf_field_new }}</td>
+                                        {% set convina1 = value.id ~ '1' ~ val1.id %}
+                                        <td>
+                                        <input
+                                            type="checkbox"
+                                            id="che_{{val1.id}}_{{value.id}}_1"
+                                            name="che_{{val1.id}}_{{value.id}}_1"
+                                            class="form-control viewTable"
+                                            data-type="1"
+                                            data-fieldid="{{val1.id}}"
+                                            data-tableid="{{value.id}}"
+                                            {%  if  confView[convina1]  is   defined  %}  checked  {%  endif  %}
+                                        />
+                                        </td>
+                                        {% set convina2 = value.id ~ '2' ~ val1.id %}
+                                        <td>
+                                        <input
+                                            type="checkbox"
+                                            id="che_{{val1.id}}_{{value.id}}_2"
+                                            name="che_{{val1.id}}_{{value.id}}_2"
+                                            class="form-control viewTable"
+                                            data-type="2"
+                                            data-fieldid="{{val1.id}}"
+                                            data-tableid="{{value.id}}" 
+                                            {%  if  confView[convina2]  is   defined  %}  checked  {%  endif  %}
+                                        />
+                                        </td>
+                                        {% set convina3 = value.id ~ '3' ~ val1.id %}
+                                        <td>
+                                        <input
+                                            type="checkbox"
+                                            id="che_{{val1.id}}_{{value.id}}_3"
+                                            name="che_{{val1.id}}_{{value.id}}_3"
+                                            class="form-control viewTable"
+                                            data-type="3"
+                                            data-fieldid="{{val1.id}}"
+                                            data-tableid="{{value.id}}" 
+                                            {%  if  confView[convina3]  is   defined  %}  checked  {%  endif  %}
+                                        />
+                                        </td>
+                                        {% set convina4 = value.id ~ '4' ~ val1.id %}
+                                        <td>
+                                        <input
+                                            type="checkbox"
+                                            id="che_{{val1.id}}_{{value.id}}_4"
+                                            name="che_{{val1.id}}_{{value.id}}_4"
+                                            class="form-control viewTable"
+                                            data-type="4"
+                                            data-fieldid="{{val1.id}}"
+                                            data-tableid="{{value.id}}" 
+                                            {%  if  confView[convina4]  is   defined  %}  checked  {%  endif  %}
+                                        />
+                                        </td>
+                                        {% set convina5 = value.id ~ '5' ~ val1.id %}
+                                        <td>
+                                        <input
+                                            type="checkbox"
+                                            id="che_{{val1.id}}_{{value.id}}_5"
+                                            name="che_{{val1.id}}_{{value.id}}_5"
+                                            class="form-control viewTable"
+                                            data-type="5"
+                                            data-fieldid="{{val1.id}}"
+                                            data-tableid="{{value.id}}" 
+                                            {%  if  confView[convina5]  is   defined  %}  checked  {%  endif  %}
+                                        />
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                  {% endif %} 
+                                    {% if continue %} 
+                                        {% set continue  = false %} 
+                                    {% endif %} 
+                                {% endfor %}
+                                <!--
+                                  <tr>
+                                    <td>Imagen</td>
+                                    <td>&nbsp;</td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        id="che{{value.conf_table}}_{{val1.id}}"
+                                        name="che{{value.conf_table}}_{{val1.id}}"
+                                      />
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        id="che{{value.conf_table}}_{{val1.id}}"
+                                        name="che{{value.conf_table}}_{{val1.id}}"
+                                      />
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        id="che{{value.conf_table}}_{{val1.id}}"
+                                        name="che{{value.conf_table}}_{{val1.id}}"
+                                      />
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        id="che{{value.conf_table}}_{{val1.id}}"
+                                        name="che{{value.conf_table}}_{{val1.id}}"
+                                      />
+                                    </td>
+                                    <td></td>
+                                  </tr>
+                                  <tr>
+                                    <td>Ver PDF</td>
+                                    <td>&nbsp;</td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        id="che{{value.conf_table}}_{{val1.id}}"
+                                        name="che{{value.conf_table}}_{{val1.id}}"
+                                      />
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        id="che{{value.conf_table}}_{{val1.id}}"
+                                        name="che{{value.conf_table}}_{{val1.id}}"
+                                      />
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        id="che{{value.conf_table}}_{{val1.id}}"
+                                        name="che{{value.conf_table}}_{{val1.id}}"
+                                      />
+                                    </td>
+                                    <td>
+                                      <input
+                                        type="checkbox"
+                                        id="che{{value.conf_table}}_{{val1.id}}"
+                                        name="che{{value.conf_table}}_{{val1.id}}"
+                                      />
+                                    </td>
+                                    <td></td>
+                                  </tr>
+                                  -->
+                                </tbody>
+                              </table>
+                            </div>
+                            <div
+                              role="tabpanel"
+                              class="tab-pane"
+                              id="names_fields_{{value.conf_table}}"
+                            >
+                              <table class="table">
+                                <thead>
+                                  <tr>
+                                    <th>#</th>
+                                    <th>Nombre campo</th>
+                                    <th>Cambiar por</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  {% set continue = false %} {% for key1, val1
+                                  in value["fields"] %} {% if val1.conf_field ==
+                                  "id" %} {% set continue = true %} {% endif %}
+                                  {% if not continue %}
+                                  <tr>
+                                    <td>{{ key1 }}</td>
+                                    <td>{{ val1.conf_field }}</td>
+                                    <td>
+                                      <input
+                                        type="text"
+                                        name="nameNew_{{value.conf_table}}_{{key1}}"
+                                        id="nameNew_{{value.conf_table}}_{{key1}}"
+                                        value="{{val1.conf_field_new}}"
+                                        class="txtNameFiell"
+                                        data-fieldid="{{val1.id}}"
+                                      />
+                                    </td>
+                                  </tr>
+                                  {% endif %} {% if continue %} {% set continue
+                                  = false %} {% endif %} {% endfor %}
+                                </tbody>
+                              </table>
+                            </div>
+                            <div
+                              role="tabpanel"
+                              class="tab-pane"
+                              id="names_update_{{value.conf_table}}"
+                            >
+
+                            
+
+                            <input 
+                                type="button" 
+                                class="btn btn-black btn-lg btn-block cmdDesplegarChange" 
+                                name="cmdUpd_{{value.id}}" 
+                                id="cmdUpd_{{value.id}}" 
+                                value="Click para desplegar cambios de &nbsp; {{value.name|upper }}"
+                                data-tableid="{{value.id}}"
+                                >
+
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script
+  type="text/javascript"
+  src="{{ pathSite }}design/{{ design }}/assets/widgets/nestable/nestable.js"
+></script>
+{% include 'includesAdmin/footerJS.html' %}
+<script>
+      $(document).ready(function() {
+
+  var updateOutput = function(e) {
+      var list = e.length ? e : $(e.target),
+          output = list.data('output');
+      if (window.JSON) {
+          //output.val(window.JSON.stringify(list.nestable('serialize'))); //, null, 2));
+      } else {
+          //output.val('JSON browser support required for this demo.');
+      }
+  };
+
+  {% for keyx, value in tables %}
+
+
+              $('#nestable_{{value.conf_table}}').nestable({
+                  group: 1
+              })
+              .on('change', updateOutput);
+              updateOutput($('#nestable_{{value.conf_table}}').data('output', $('#nestable-output_{{value.conf_table}}')));
+
+
+  {% endfor %}
+  $('#nestable-menu').on('click', function(e) {
+          var target = $(e.target),
+              action = target.data('action');
+          if (action === 'expand-all') {
+              $('.dd').nestable('expandAll');
+          }
+          if (action === 'collapse-all') {
+              $('.dd').nestable('collapseAll');
+          }
+      });
+
+  });
+</script>
