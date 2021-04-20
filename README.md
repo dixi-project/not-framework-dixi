@@ -1,6 +1,7 @@
 # Not Framework Dixi 
 
-#es-Es una aplicación que permite crear sistemas administrativos de forma simple en abse a la estructura de la base de datos 
+#es-Es una aplicación que permite crear sistemas administrativos de forma simple en abse a la estructura de la base de datos
+ 
 #en-Is an application that allows you to create administrative systems in a simple way based on the structure of the database
 
 #es-Intalación
