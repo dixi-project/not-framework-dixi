@@ -67,7 +67,7 @@ class CREARWEB {
 // --> Carga la direccion del modelo
       $modelosPath = $this->getFolderModelo($this->configure); 
 // --> Si no hay cookie de login
-      //if($controllerName != 'ControllerLogin' && !isset($_SESSION['idUser'])){
+      //if($controllerName != 'ControllerLogin' && !isset($_COOKIE['idUser'])){
       //    $controllerName = "ControllerIndex";
       //}
 // -- >Incluimos el fichero que contiene nuestra clase controladora solicitada

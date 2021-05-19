@@ -119,7 +119,7 @@ class Viewy {
         $dat = explode("/", $vars["con"]);
         $mandarData["controller"] = $dat[0];
 
-//var_dump($_SESSION);
+//var_dump($_COOKIE);
         foreach ($_COOKIE as $key => $value) {
             //$sm->assign($key, $value);
             //echo $key."-".$value."<br>";

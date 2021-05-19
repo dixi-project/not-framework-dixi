@@ -118,7 +118,7 @@ class Viewy {
                 $mandarData[$key]=$value;
             }
         }
-//var_dump($_SESSION);
+//var_dump($_COOKIE);
         foreach ($_COOKIE as $key => $value) {
             //$sm->assign($key, $value);
             //echo $key."-".$value."<br>";

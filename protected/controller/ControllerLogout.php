@@ -15,10 +15,10 @@ class ControllerLogout {
         setcookie('Rol', null, -1, '/', $_SERVER["SERVER_NAME"], isset($_SERVER["HTTPS"]), true);
         setcookie('Nombre', null, -1, '/', $_SERVER["SERVER_NAME"], isset($_SERVER["HTTPS"]), true);
         /*
-        unset($_SESSION['idUser']);
-        unset($_SESSION['idRol']);
-        unset($_SESSION['Rol']);
-        unset($_SESSION['Nombre']);
+        unset($_COOKIE['idUser']);
+        unset($_COOKIE['idRol']);
+        unset($_COOKIE['Rol']);
+        unset($_COOKIE['Nombre']);
         */
         $data["isCorrect"] = TRUE;
         $data["tituloMensaje"] = "Exito!";

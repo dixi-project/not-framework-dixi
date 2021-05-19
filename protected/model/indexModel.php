@@ -130,7 +130,7 @@ class indexModel {
 
     public function htmlPOST($table, $valores = null) {
         $respo = "";
-        if (isset($_SESSION["idUser"]) && $_SESSION["idUser"] > 0) {
+        if (isset($_COOKIE["idUser"]) && $_COOKIE["idUser"] > 0) {
             $respo = "responder";
         }
         $cad = "";
@@ -168,7 +168,7 @@ class indexModel {
 
     public function htmlPOST2($table, $valores = null) {
         $respo = "";
-        if (isset($_SESSION["idUser"]) && $_SESSION["idUser"] > 0) {
+        if (isset($_COOKIE["idUser"]) && $_COOKIE["idUser"] > 0) {
             $respo = "responder";
         }
         $cad = "";
@@ -339,27 +339,27 @@ class indexModel {
         // --> Entonces generar relacion de curso modulos y paginas
         if ($res->nr == 1) {
           /*
-            $_SESSION["idUser"] = $res->id;
-            $_SESSION["idRol"] = $res->rol_id;
-            $_SESSION["Rol"] = $res->rol;
-            $_SESSION["Nombre"] = $res->nombre;
+            $_COOKIE["idUser"] = $res->id;
+            $_COOKIE["idRol"] = $res->rol_id;
+            $_COOKIE["Rol"] = $res->rol;
+            $_COOKIE["Nombre"] = $res->nombre;
            */
             setcookie('idUser', $res->id, time ()+(86400 * 30), '/',$_SERVER["SERVER_NAME"]);
             setcookie('empresaID', $res->empresa_id, time ()+(86400 * 30), '/',$_SERVER["SERVER_NAME"]);
             setcookie('idRol', $res->rol_id, time ()+(86400 * 30), '/',$_SERVER["SERVER_NAME"]);
             setcookie('Rol', $res->rol, time ()+(86400 * 30), '/',$_SERVER["SERVER_NAME"]);
             setcookie('Nombre', $res->name, time ()+(86400 * 30), '/',$_SERVER["SERVER_NAME"]);
-            //var_dump($_SESSION);
+            //var_dump($_COOKIE);
             //exit();
 
              $rr="{$res->id}|{$res->rol_id}|{$res->rol}|{$res->nombre}|{$res->empresa_id}";
         } else {
           /*
             session_destroy();
-            unset($_SESSION['idUser']);
-            unset($_SESSION['idRol']);
-            unset($_SESSION['Rol']);
-            unset($_SESSION['Nombre']);
+            unset($_COOKIE['idUser']);
+            unset($_COOKIE['idRol']);
+            unset($_COOKIE['Rol']);
+            unset($_COOKIE['Nombre']);
             */
             setcookie('idUser', null, time()-100, '/',$_SERVER["SERVER_NAME"]);
             setcookie('empresaID', null, time()-100, '/',$_SERVER["SERVER_NAME"]);

@@ -15,7 +15,7 @@ class controllerValidarLogin {
             $data["isCorrect"] = TRUE;
             $data["tituloMensaje"] = "Acceso correcto.";
             $data["Mensaje"] = "El usuario es valido.";
-            switch ($_SESSION["idRol"]){
+            switch ($_COOKIE["idRol"]){
                 case 1:
                     $data["return"] = "home-admin";
                 break;

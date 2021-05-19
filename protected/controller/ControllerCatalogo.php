@@ -51,7 +51,7 @@ class ControllerCatalogo extends Controller
         $this->data["campos"] = indexModel::bd($this->conf)->getcamposAjax($dominio,"REPORT");
         //var_dump( $this->data["campos"]);
         if ($dominio == "campana") {
-            $iid = $_SESSION["idUser"];
+            $iid = $_COOKIE["idUser"];
             $this->data["datos"] = indexModel::bd($this->conf)->getSQL("SELECT * FROM campana WHERE user_id = {$iid}");
         } else {
             $this->data["datos"] = indexModel::bd($this->conf)->getDominio($dominio);
