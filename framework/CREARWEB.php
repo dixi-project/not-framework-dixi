@@ -80,8 +80,8 @@ class CREARWEB {
       require_once $this->getFolderControlador($this->configure).'Controller.php';
       require_once ($controllerPath);
       require_once $this->getFolderModelo($this->configure).'indexModel.php';
-      require_once $this->getFolderVista($this->configure) . 'Viewy.php';
-      $view = new Viewy($this->getFolderVista($this->configure), $this->configure);
+      require_once $this->getFolderVista($this->configure) . 'View.php';
+      $view = new View($this->getFolderVista($this->configure), $this->configure);
 // --> Si hay que sacar una ubicacion de tema
       $controller = new $controllerName($view,$this->configure,$variables,$accion);
 // --> (Vista, modelo, configuración , Controlador,Path sitio, Path einfluss, Path Stats)

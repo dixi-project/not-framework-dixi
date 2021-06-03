@@ -5,8 +5,8 @@ class ControllerIndex extends Controller {
     }
     public function main() {
         //$dominio = indexModel::bd($this->conf)->getDominio("role");
-        //$this->view->show("index.html", $this->data, $this->accion);
-        $this->view->show("indexLogin.html", $this->data, $this->accion);
+        $this->view->show("index.html", $this->data, $this->accion);
+        //$this->view->show("indexLogin.html", $this->data, $this->accion);
     }
 }
 ?>

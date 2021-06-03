@@ -1,6 +1,4 @@
 <?php
-ini_set('display_errors',0);
-error_reporting(E_ALL);
 header('content-type: application/json; charset=utf-8');
 header("access-control-allow-origin: *");
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');

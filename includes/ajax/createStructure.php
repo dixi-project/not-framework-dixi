@@ -13,8 +13,6 @@
    
 
 <?php
-ini_set('display_errors',0);
-error_reporting(E_ALL);
 header("access-control-allow-origin: *");
 header('Access-Control-Allow-Headers: Origin, Content-Type, X-Auth-Token');
 $config=dirname(__FILE__).'/../../protected/config/data.php';
