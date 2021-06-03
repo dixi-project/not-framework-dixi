@@ -1,5 +1,6 @@
 <?php
-class indexModel {
+class indexModel
+{
 
     public $db;
     private $host;
@@ -11,9 +12,10 @@ class indexModel {
     private $estructura;
     private static $tituloAlternox;
 
-    function __construct($conf) {
+    function __construct($conf)
+    {
         //Traemos la unica instancia de PDO
-        $PDOPath=dirname(__FILE__).'/../../'.$conf['folderModelos'] . 'SPDO.php';
+        $PDOPath = dirname(__FILE__) . '/../../' . $conf['folderModelos'] . 'SPDO.php';
         //echo $PDOPath;
         require_once $PDOPath;
         $host = $conf['host'];
@@ -26,7 +28,8 @@ class indexModel {
         $this->db = SPDO::singleton($host, $bd, $user, $clave);
     }
 
-    public function setJsonV1($error,$array){
+    public function setJsonV1($error, $array)
+    {
         /*
         $result = "error";
         if($status){
@@ -34,28 +37,31 @@ class indexModel {
         }
         */
         $data = array(
-            "error"=>$error,
-            "version"=>"1",
-            "response"=>$array
+            "error" => $error,
+            "version" => "1",
+            "response" => $array
         );
         header('Content-Type: application/json');
         echo json_encode($data);
         exit();
     }
 
-    public function desbloquearUsuario($id) {
+    public function desbloquearUsuario($id)
+    {
         $sql = "UPDATE user SET status_id=1 WHERE id = " . $id;
         $reg = indexModel::bd($this->conf)->getSQL($sql);
         return 1;
     }
 
-    public function bloquearUsuario($id) {
+    public function bloquearUsuario($id)
+    {
         $sql = "UPDATE user SET status_id=0 WHERE id = " . $id;
         $reg = indexModel::bd($this->conf)->getSQL($sql);
         return 1;
     }
 
-    public function cambiarClave($datos) {
+    public function cambiarClave($datos)
+    {
         foreach ($datos as $key => $value) {
             $$key = $value;
         }
@@ -73,7 +79,8 @@ class indexModel {
         return $id;
     }
 
-    public function crearUsuario($datos) {
+    public function crearUsuario($datos)
+    {
         $cad = null;
         foreach ($datos as $key => $value) {
             if (substr($key, 0, 4) == "Xrel") {
@@ -94,41 +101,50 @@ class indexModel {
         return $cad;
     }
 
-    public function getHascamposAll($table, $id = null) {
+    public function getHascamposAll($table, $id = null)
+    {
         return Catalogos::getRelacionTable($this->db, $this->bd, $table, $id);
     }
 
-    public function getEstructuraTable($table) {
-        return Catalogos::getStructureTable($this->bd,$this->db, $table);
+    public function getEstructuraTable($table)
+    {
+        return Catalogos::getStructureTable($this->bd, $this->db, $table);
     }
 
-    public static function getNameDominio($var) {
+    public static function getNameDominio($var)
+    {
         $dat = explode("/", $var["con"]);
         return $dat[1];
     }
 
-    public static function bd($config) {
+    public static function bd($config)
+    {
         return new indexModel($config);
     }
 
-    public function getSQL($sql) {
-        return Catalogos::getSql($this->bd,$this->db, $sql);
+    public function getSQL($sql)
+    {
+        return Catalogos::getSql($this->bd, $this->db, $sql);
     }
 
-    
-    public function getDominioWhere($table, $where, $id = null, $limit = null) {
+
+    public function getDominioWhere($table, $where, $id = null, $limit = null)
+    {
         return Catalogos::getDataWhere($this->db, $table, $this->bd, $where, $id, $limit);
     }
 
-    public function getDominio($table, $id = null, $limit = null) {
+    public function getDominio($table, $id = null, $limit = null)
+    {
         return Catalogos::getData($this->db, $table, $this->bd, $id, $limit);
     }
 
-    public function getDominioID($table, $valores = null) {
+    public function getDominioID($table, $valores = null)
+    {
         return Catalogos::getDataArray($this->db, $table, $this->bd, $valores);
     }
 
-    public function htmlPOST($table, $valores = null) {
+    public function htmlPOST($table, $valores = null)
+    {
         $respo = "";
         if (isset($_COOKIE["idUser"]) && $_COOKIE["idUser"] > 0) {
             $respo = "responder";
@@ -166,7 +182,8 @@ class indexModel {
         return $cad;
     }
 
-    public function htmlPOST2($table, $valores = null) {
+    public function htmlPOST2($table, $valores = null)
+    {
         $respo = "";
         if (isset($_COOKIE["idUser"]) && $_COOKIE["idUser"] > 0) {
             $respo = "responder";
@@ -202,29 +219,35 @@ class indexModel {
         return $cad;
     }
 
-    public function getIDField($table, $campo, $valor) {
+    public function getIDField($table, $campo, $valor)
+    {
         return Catalogos::getDataForField($this->db, $table, $campo, $valor);
     }
 
-    public function getcampos($table) {
-        return Catalogos::getFields($this->bd,$this->db, $table);
+    public function getcampos($table)
+    {
+        return Catalogos::getFields($this->bd, $this->db, $table);
     }
 
-    public function getcamposAll($table) {
+    public function getcamposAll($table)
+    {
         return Catalogos::getFieldsAll($this->db, $table, $this->bd);
     }
 
 
-    public function getcamposAjax($table,$origin) {
-        return Catalogos::getFieldsAjax($this->bd,$this->db, $table,$origin);
+    public function getcamposAjax($table, $origin)
+    {
+        return Catalogos::getFieldsAjax($this->bd, $this->db, $table, $origin);
     }
 
-    public function getcamposAllAjax($table,$origin) {
-        return Catalogos::getFieldsAllAjax($this->db, $table, $this->bd,$origin);
+    public function getcamposAllAjax($table, $origin)
+    {
+        return Catalogos::getFieldsAllAjax($this->db, $table, $this->bd, $origin);
     }
 
 
-    public function updateDominio($datos, $id = null) {
+    public function updateDominio($datos, $id = null)
+    {
         //var_dump($datos);
         $camposRelacionados = null;
         foreach ($datos as $key => $value) {
@@ -245,11 +268,13 @@ class indexModel {
         return $cad;
     }
 
-    public function deleteDominio($table, $id) {
+    public function deleteDominio($table, $id)
+    {
         return Catalogos::borrarRegistro($this->conf, $this->db, $table, $id);
     }
 
-    public function getMensaje($data) {
+    public function getMensaje($data)
+    {
         $color = "danger";
         $colorx = "red";
         if ($data["isCorrect"]) {
@@ -258,12 +283,12 @@ class indexModel {
         }
 
         $campos = "";
-        if(isset($data["txt"])){
-          foreach ($data["txt"] as $key => $value) {
-              if ($key != "con") {
-                  $campos.='<input type="hidden" name="' . $key . '" value="' . $value . '">'.PHP_EOL ;
-              }
-          }
+        if (isset($data["txt"])) {
+            foreach ($data["txt"] as $key => $value) {
+                if ($key != "con") {
+                    $campos .= '<input type="hidden" name="' . $key . '" value="' . $value . '">' . PHP_EOL;
+                }
+            }
         }
 
         $res = '
@@ -315,7 +340,8 @@ class indexModel {
         return $res;
     }
 
-    public function validarAcceso($usuario, $pass, $id = null) {
+    public function validarAcceso($usuario, $pass, $id = null)
+    {
         // --> Validar curso para el usuario
 
 
@@ -338,40 +364,41 @@ class indexModel {
         //var_dump($res);
         // --> Entonces generar relacion de curso modulos y paginas
         if ($res->nr == 1) {
-          /*
+            /*
             $_COOKIE["idUser"] = $res->id;
             $_COOKIE["idRol"] = $res->rol_id;
             $_COOKIE["Rol"] = $res->rol;
             $_COOKIE["Nombre"] = $res->nombre;
            */
-            setcookie('idUser', $res->id, time ()+(86400 * 30), '/',$_SERVER["SERVER_NAME"]);
-            setcookie('empresaID', $res->empresa_id, time ()+(86400 * 30), '/',$_SERVER["SERVER_NAME"]);
-            setcookie('idRol', $res->rol_id, time ()+(86400 * 30), '/',$_SERVER["SERVER_NAME"]);
-            setcookie('Rol', $res->rol, time ()+(86400 * 30), '/',$_SERVER["SERVER_NAME"]);
-            setcookie('Nombre', $res->name, time ()+(86400 * 30), '/',$_SERVER["SERVER_NAME"]);
+            setcookie('idUser', $res->id, time() + (86400 * 30), '/', $_SERVER["SERVER_NAME"]);
+            setcookie('empresaID', $res->empresa_id, time() + (86400 * 30), '/', $_SERVER["SERVER_NAME"]);
+            setcookie('idRol', $res->rol_id, time() + (86400 * 30), '/', $_SERVER["SERVER_NAME"]);
+            setcookie('Rol', $res->rol, time() + (86400 * 30), '/', $_SERVER["SERVER_NAME"]);
+            setcookie('Nombre', $res->name, time() + (86400 * 30), '/', $_SERVER["SERVER_NAME"]);
             //var_dump($_COOKIE);
             //exit();
 
-             $rr="{$res->id}|{$res->rol_id}|{$res->rol}|{$res->nombre}|{$res->empresa_id}";
+            $rr = "{$res->id}|{$res->rol_id}|{$res->rol}|{$res->nombre}|{$res->empresa_id}";
         } else {
-          /*
+            /*
             session_destroy();
             unset($_COOKIE['idUser']);
             unset($_COOKIE['idRol']);
             unset($_COOKIE['Rol']);
             unset($_COOKIE['Nombre']);
             */
-            setcookie('idUser', null, time()-100, '/',$_SERVER["SERVER_NAME"]);
-            setcookie('empresaID', null, time()-100, '/',$_SERVER["SERVER_NAME"]);
-            setcookie('idRol', null, time()-100, '/',$_SERVER["SERVER_NAME"]);
-            setcookie('Rol', null, time()-100, '/',$_SERVER["SERVER_NAME"]);
-            setcookie('Nombre', null, time()-100, '/',$_SERVER["SERVER_NAME"]);
-            $rr="0|0|0|0|0";
+            setcookie('idUser', null, time() - 100, '/', $_SERVER["SERVER_NAME"]);
+            setcookie('empresaID', null, time() - 100, '/', $_SERVER["SERVER_NAME"]);
+            setcookie('idRol', null, time() - 100, '/', $_SERVER["SERVER_NAME"]);
+            setcookie('Rol', null, time() - 100, '/', $_SERVER["SERVER_NAME"]);
+            setcookie('Nombre', null, time() - 100, '/', $_SERVER["SERVER_NAME"]);
+            $rr = "0|0|0|0|0";
         }
         return $rr;
     }
 
-    public function getMenu($type = 1) {
+    public function getMenu($type = 1)
+    {
         $cad = array(
             1 => array(
                 "Generales" => array(
@@ -389,59 +416,59 @@ class indexModel {
                         "name" => "Alta de Prospectos",
                         "icon" => "icon-grid"
                     ),
-                    array(
-                ),
+                    array(),
 
-            ),
-            2 => array(
-                "Servicios" => array(
-                    "icon" => "icon-note",
-                    array(
-                        "ruta" => "prospectos",
-                        "name" => "Alta de Prospectos",
-                        "icon" => "icon-grid"
-                    ),
                 ),
+                2 => array(
+                    "Servicios" => array(
+                        "icon" => "icon-note",
+                        array(
+                            "ruta" => "prospectos",
+                            "name" => "Alta de Prospectos",
+                            "icon" => "icon-grid"
+                        ),
+                    ),
+                )
             )
-        )
-            );
+        );
         return $cad[$type];
     }
 
-    public function sendMailGetResponse($correo, $name, $asunto, $mensaje, $opc = 0) {
-
+    public function sendMailGetResponse($correo, $name, $asunto, $mensaje, $opc = 0)
+    {
     }
 
-    public static function sendMail($correo, $name, $asunto, $mensaje, $opc = 0) {
-      if ($opc == 1) {
-          include_once('../../framework/phpMailer/class.phpmailer.php');
-      } else {
-          include_once('framework/phpMailer/class.phpmailer.php');
-      }
-      //include("framework/phpMailer/class.smtp.php"); // optional, gets called from within class.phpmailer.php if not already loaded
-      //$fs = fsockopen("ssl://smtp.gmail.com", 465);
-      //echo 1;
-      $mail = new PHPMailer();
-      //$mensaje="<img  alt=\"Notify MX\" src=\"http://admin.notify.com.mx/assets/image-resources/logo.png\"><br><br>".$mensaje;
+    public static function sendMail($correo, $name, $asunto, $mensaje, $opc = 0)
+    {
+        if ($opc == 1) {
+            include_once('../../framework/phpMailer/class.phpmailer.php');
+        } else {
+            include_once('framework/phpMailer/class.phpmailer.php');
+        }
+        //include("framework/phpMailer/class.smtp.php"); // optional, gets called from within class.phpmailer.php if not already loaded
+        //$fs = fsockopen("ssl://smtp.gmail.com", 465);
+        //echo 1;
+        $mail = new PHPMailer();
+        //$mensaje="<img  alt=\"Notify MX\" src=\"http://admin.notify.com.mx/assets/image-resources/logo.png\"><br><br>".$mensaje;
 
-      //$body = eregi_replace("[\]", '', $mensaje);
+        //$body = eregi_replace("[\]", '', $mensaje);
 
-      $body = $mensaje;
-      if ($opc == 1) {
-          $mail->SetLanguage("en", '../../framework/phpMailer/language/');
-      } else {
-          $mail->SetLanguage("en", 'framework/phpMailer/language/');
-      }
-      $mail->IsSMTP();
-      $mail->SMTPAuth = true;                  // enable SMTP authentication
-      //$mail->SMTPSecure = "ssl";                  // sets the prefix to the servier
-      $mail->Host = "mail.notify.com.mx";//"hv3svg038.neubox.net"; //"ssl://smtp.gmail.com";      // sets GMAIL as the SMTP server
-      $mail->Port       = 587;                   // set the SMTP port for the GMAIL server
-      $mail->Username = "info@notify.com.mx";  // GMAIL username
-      $mail->Password = "1G_}Vv3mw^rJ";            // GMAIL password
-      //$mail->AddReplyTo("contacto@deporteorganizado.com","First Last");
-      $mail->From = "info@notify.com.mx";
-      $mail->FromName = "Residuos";
+        $body = $mensaje;
+        if ($opc == 1) {
+            $mail->SetLanguage("en", '../../framework/phpMailer/language/');
+        } else {
+            $mail->SetLanguage("en", 'framework/phpMailer/language/');
+        }
+        $mail->IsSMTP();
+        $mail->SMTPAuth = true;                  // enable SMTP authentication
+        //$mail->SMTPSecure = "ssl";                  // sets the prefix to the servier
+        $mail->Host = "mail.notify.com.mx"; //"hv3svg038.neubox.net"; //"ssl://smtp.gmail.com";      // sets GMAIL as the SMTP server
+        $mail->Port       = 587;                   // set the SMTP port for the GMAIL server
+        $mail->Username = "info@notify.com.mx";  // GMAIL username
+        $mail->Password = "1G_}Vv3mw^rJ";            // GMAIL password
+        //$mail->AddReplyTo("contacto@deporteorganizado.com","First Last");
+        $mail->From = "info@notify.com.mx";
+        $mail->FromName = "Residuos";
         $mail->Subject = $asunto;
         //$mail->Body       = "Hi,<br>This is the HTML BODY<br>";                      //HTML Body
         //$mail->AltBody    = "To view the message, please use an HTML compatible email viewer!"; // optional, comment out and test
@@ -465,7 +492,8 @@ class indexModel {
         }
     }
 
-    protected function getIDPublico($plaintext) {
+    protected function getIDPublico($plaintext)
+    {
         $key = pack('H*', "bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a7");
         $key_size = strlen($key);
         $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
@@ -476,66 +504,69 @@ class indexModel {
         return $ciphertext_base64;
     }
 
-    public function generarURL($id, $ruta) {
+    public function generarURL($id, $ruta)
+    {
         $md5 = md5($id);
         $md5 = base64_encode($md5);
         $cad = $ruta . "valida-perfil/" . $md5;
         return $cad;
     }
 
-    public function getEmpresa() {
+    public function getEmpresa()
+    {
         $sql = "SELECT a.* FROM empresa AS a INNER JOIN user_has_empresa AS b ON a.id=b.empresa_id WHERE b.user_rel_id = " . $_SESSION["idUser"];
         $reg = indexModel::bd($this->conf)->getSQL($sql)[0];
         return $reg;
     }
 
-    public function generaPass(){
+    public function generaPass()
+    {
         $cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890!#$%&=?*^~";
-        $longitudCadena=strlen($cadena);
+        $longitudCadena = strlen($cadena);
         $cadena2 = "-+|!#$%&=?*^~";
-        $longitudCadena2=strlen($cadena);
+        $longitudCadena2 = strlen($cadena);
         $pass = "";
-        $longitudPass=6;
-        for($i=1 ; $i<=$longitudPass ; $i++){
-            $pos=rand(0,$longitudCadena-1);
-            $pass .= substr($cadena,$pos,1);
+        $longitudPass = 6;
+        for ($i = 1; $i <= $longitudPass; $i++) {
+            $pos = rand(0, $longitudCadena - 1);
+            $pass .= substr($cadena, $pos, 1);
         }
-        $longitudPass2=4;
-        for($i=1 ; $i<=$longitudPass2 ; $i++){
-            $pos=rand(0,$longitudCadena2-1);
-            $pass .= substr($cadena2,$pos,1);
+        $longitudPass2 = 4;
+        for ($i = 1; $i <= $longitudPass2; $i++) {
+            $pos = rand(0, $longitudCadena2 - 1);
+            $pass .= substr($cadena2, $pos, 1);
         }
         return $pass;
     }
 
-    public function generaPassAPP(){
+    public function generaPassAPP()
+    {
         $cadena = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
-        $longitudCadena=strlen($cadena);
+        $longitudCadena = strlen($cadena);
         $pass = "";
-        $longitudPass=6;
-        for($i=1 ; $i<=$longitudPass ; $i++){
-            $pos=rand(0,$longitudCadena-1);
-            $pass .= substr($cadena,$pos,1);
+        $longitudPass = 6;
+        for ($i = 1; $i <= $longitudPass; $i++) {
+            $pos = rand(0, $longitudCadena - 1);
+            $pass .= substr($cadena, $pos, 1);
         }
 
         return $pass;
     }
-    
-    public function controlAcceso2($conf,$dat) {
-      //var_dump($conf);
-      //var_dump($dat);
+
+    public function controlAcceso2($conf, $dat)
+    {
+        //var_dump($conf);
+        //var_dump($dat);
 
 
 
 
-      $sqlValidate1="SELECT * FROM campana WHERE id = {$idReg2}";
-      $campana = indexModel::bd($conf)->getSQL($sqlValidate1)[0];
-
-
-
+        $sqlValidate1 = "SELECT * FROM campana WHERE id = {$idReg2}";
+        $campana = indexModel::bd($conf)->getSQL($sqlValidate1)[0];
     }
 
-    public function controlAcceso($tabla) {
+    public function controlAcceso($tabla)
+    {
         /*1.-Saber si es un usuario que esta logeado
         2.-En caso de no estarlo salir
         3.-Si esta logeado revisar que rol es
@@ -544,64 +575,62 @@ class indexModel {
         6.-Si lo tiene dejar pasar*/
         //$usuario = $_COOKIE["variable"];
 
-         foreach ($_COOKIE as $key => $value) {
-                $$key=$value;
-         }
+        foreach ($_COOKIE as $key => $value) {
+            $$key = $value;
+        }
 
-         if($idUser !=0){
+        if ($idUser != 0) {
             //1.-Buscar en la tabla de modulos la tabla para extraer id del modulo
             //2.-Extraer el id del rol
             //3.-Si en la tabla de persmiso existe el rol con el modulo y tiene permiso entonces dejamos pasar
-     
-                if($tabla != ""){
-                     $query = "SELECT * FROM modulo WHERE tabla ='$tabla'";
-                     $modul = indexModel::bd($this->conf)->getSQL($query)[0];
-                  
-                     $id_modulo = $modul->id;
-                     $idRol;
-                 
-                     $query = "SELECT * FROM permisos WHERE rol_id = '$idRol' AND modulo_id = '$id_modulo'";
-                     $tables = indexModel::bd($this->conf)->getSQL($query)[0];
-            
+
+            if ($tabla != "") {
+                $query = "SELECT * FROM modulo WHERE tabla ='$tabla'";
+                $modul = indexModel::bd($this->conf)->getSQL($query)[0];
+
+                $id_modulo = $modul->id;
+                $idRol;
+
+                $query = "SELECT * FROM permisos WHERE rol_id = '$idRol' AND modulo_id = '$id_modulo'";
+                $tables = indexModel::bd($this->conf)->getSQL($query)[0];
 
 
-                 if($tables->permiso_crear_id != 1 && $tables->permiso_leer_id  != 1
-                    && $tables->permiso_actualizar_id != 1 && $tables->permiso_borrar_id != 1){
-                    
-                  echo "No acceso";
-                        $rutt = "home";
-                        echo '<meta http-equiv="refresh" content="0;url='.$this->conf["pathCMSSite"].$rutt.'">';
-         
-            
-                 }
-                    
-           
+
+                if (
+                    $tables->permiso_crear_id != 1 && $tables->permiso_leer_id  != 1
+                    && $tables->permiso_actualizar_id != 1 && $tables->permiso_borrar_id != 1
+                ) {
+
+                    echo "No acceso";
+                    $rutt = "home";
+                    echo '<meta http-equiv="refresh" content="0;url=' . $this->conf["pathCMSSite"] . $rutt . '">';
                 }
-             
-         }else{
-             $rutt = "";
-              echo '<meta http-equiv="refresh" content="0;url='.$this->conf["pathCMSSite"].$rutt.'">';
-         }
-
-      
+            }
+        } else {
+            $rutt = "";
+            echo '<meta http-equiv="refresh" content="0;url=' . $this->conf["pathCMSSite"] . $rutt . '">';
+        }
     }
 
-    public function getCicloActual() {
+    public function getCicloActual()
+    {
         $empresa = $this->getEmpresa();
         $sql = "SELECT * FROM ciclo WHERE status_ciclo_id = 1 AND empresa_id = {$empresa->id} ORDER BY fecha_final DESC LIMIT 1 ";
         $reg = indexModel::bd($this->conf)->getSQL($sql)[0];
         return $reg;
     }
 
-    public function generaUserAPP($name) {
+    public function generaUserAPP($name)
+    {
         $na = rand(1, 99);
         $na = str_pad($na, 2, "0", STR_PAD_LEFT);
         $dd = explode(" ", $name);
-        $name = strtolower($dd[0])."_".  substr(strtolower($dd[1]), 0,1). substr(strtolower($dd[2]), 0,1).$na;
+        $name = strtolower($dd[0]) . "_" .  substr(strtolower($dd[1]), 0, 1) . substr(strtolower($dd[2]), 0, 1) . $na;
         return $name;
     }
 
-    public function url_exists_I($url) {
+    public function url_exists_I($url)
+    {
         //echo $url."<br>";
         $ch = @curl_init($url);
         @curl_setopt($ch, CURLOPT_HEADER, TRUE);
@@ -614,36 +643,39 @@ class indexModel {
         $status = array();
         $d = @curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-        preg_match('/HTTP\/.* ([0-9]+) .*/', $d , $status);
+        preg_match('/HTTP\/.* ([0-9]+) .*/', $d, $status);
         //echo $status[1]."<br>";
         return ($status[1] == 200);
     }
 
-    public function getImgProfile($path){
-        $cad=$path."includes/img/user.png";
-        if(@isset($_COOKIE["idUser"])){
-            $isJPG = $path."/includes/images/usuarios/".$_COOKIE["idUser"].".jpg";
-            $isPNG = $path."/includes/images/usuarios/".$_COOKIE["idUser"].".png";
-            $isJPEG = $path."/includes/images/usuarios/".$_COOKIE["idUser"].".jpeg";
-            if($this->url_exists_I($isJPG)){
-                $cad=$isJPG;
-            }elseif($this->url_exists_I($isPNG)){
-                $cad=$isPNG;
-            }elseif($this->url_exists_I($isJPEG)){
-                $cad=$isJPEG;
+    public function getImgProfile($path)
+    {
+        $cad = $path . "includes/img/user.png";
+        if (@isset($_COOKIE["idUser"])) {
+            $isJPG = $path . "/includes/images/usuarios/" . $_COOKIE["idUser"] . ".jpg";
+            $isPNG = $path . "/includes/images/usuarios/" . $_COOKIE["idUser"] . ".png";
+            $isJPEG = $path . "/includes/images/usuarios/" . $_COOKIE["idUser"] . ".jpeg";
+            if ($this->url_exists_I($isJPG)) {
+                $cad = $isJPG;
+            } elseif ($this->url_exists_I($isPNG)) {
+                $cad = $isPNG;
+            } elseif ($this->url_exists_I($isJPEG)) {
+                $cad = $isJPEG;
             }
         }
         return $cad;
     }
 
-    public function SecurityParams($_Cadena) {
+    public function SecurityParams($_Cadena)
+    {
         $_Cadena = htmlspecialchars(trim(addslashes(stripslashes(strip_tags($_Cadena)))));
-        $_Cadena = str_replace(chr(160),'',$_Cadena);
+        $_Cadena = str_replace(chr(160), '', $_Cadena);
         return $_Cadena;
         //return mysql_real_escape_string($_Cadena);
     }
 
-public function getFormatoFecha($fec) {
+    public function getFormatoFecha($fec)
+    {
         $diaSemana = array("Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado");
         $meses = array("", "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre");
         $axo = substr($fec, 0, 4);
@@ -654,7 +686,8 @@ public function getFormatoFecha($fec) {
         return $fec1;
     }
 
-    public function sendNotification($tokens, $message) {
+    public function sendNotification($tokens, $message)
+    {
         $url = "https://fcm.googleapis.com/fcm/send";
         $fields = array(
             'registration_ids' => $tokens,
@@ -687,7 +720,4 @@ public function getFormatoFecha($fec) {
 
         return $result;
     }
-
-
 }
-?>

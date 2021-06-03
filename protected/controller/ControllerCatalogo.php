@@ -11,30 +11,23 @@ class ControllerCatalogo extends Controller
         foreach ($this->var as $key => $value) {
             $this->data[$key] = $value;
             $$key = $value;
-            //echo $key . "--". $value;
         }
         $dat = explode("/", $this->var["con"]);
-        //$this->data["controller"] = $dat[0];
         $dominio = $dat[1];
         // --> Programar
-
         if ($Action == "subir") {
             $sqlValidate1 = "SELECT * FROM campana WHERE id = {$idReg2}";
             $campana = indexModel::bd($this->conf)->getSQL($sqlValidate1)[0];
-            //var_dump($campana);
             // --> Actualizar Campaña
             $ss = "UPDATE campana SET status_envio_id = 1 WHERE id = {$idReg2}";
-            //echo $ss;
             indexModel::bd($this->conf)->getSQL($ss);
             $file_handle = fopen(dirname(__FILE__) . "/../../includes/files/campana/" . $idReg2 . ".csv", "r");
-            //echo $file_handle;
             $conn = 0;
             while (!feof($file_handle)) {
                 $line_of_text = fgetcsv($file_handle, 2048);
                 $conn++;
                 if ($conn > 1) {
                     $sss = "INSERT INTO send (nombre,telefono,mensaje,fecha,campana_id,fecha_limite,cantidad) VALUES ('" . $line_of_text[1] . "','" . $line_of_text[0] . "','" . $campana->mensaje . "', '" . $campana->fecha_envio . " " . $campana->hora_envio . "', {$idReg2},'" . $line_of_text[2] . "','" . $line_of_text[3] . "')";
-                    //echo $sss . " <br>\n";
                     indexModel::bd($this->conf)->getSQL($sss);
                 }
             }
@@ -42,12 +35,9 @@ class ControllerCatalogo extends Controller
 
         $this->data["activeRol"] = "sfActive";
         $structure = indexModel::bd($this->conf)->getEstructuraTable($dominio)["structure"];
-        //var_dump($structure);
-        //$this->data["nameTable"] = $structure["nameTable"];
         $this->data["isImg"] = $structure["img"];
         $this->data["dominio"] = $dominio;
-        $this->data["campos"] = indexModel::bd($this->conf)->getcamposAjax($dominio,"REPORT");
-        //var_dump( $this->data["campos"]);
+        $this->data["campos"] = indexModel::bd($this->conf)->getcamposAjax($dominio, "REPORT");
         if ($dominio == "campana") {
             $iid = $_COOKIE["idUser"];
             $this->data["datos"] = indexModel::bd($this->conf)->getSQL("SELECT * FROM campana WHERE user_id = {$iid}");
