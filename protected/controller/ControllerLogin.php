@@ -1,18 +1,15 @@
 <?php
-class controllerLogin
+class controllerLogin extends Controller
 {
     function __construct($view, $conf, $var, $acc)
     {
-        $this->view = $view;
-        $this->conf = $conf;
-        $this->var = $var;
-        $this->accion = $acc;
+        parent::__construct($view, $conf, $var, $acc);
     }
     public function main()
     {
         $data = null;
-        $usu = $this->var["username"];
-        $pass = $this->var["pwd"];
+        $usu = $this->data["username"];
+        $pass = $this->data["pwd"];
         $res = indexModel::bd($this->conf)->validarAcceso($usu, $pass);
         $dd = explode("|", $res);
         if ($dd[0] > 0) {

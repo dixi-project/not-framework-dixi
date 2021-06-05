@@ -7,17 +7,14 @@ class controllerAgregar extends Controller
     }
     public function main()
     {
-        foreach ($this->var as $key => $value) {
-            $$key = $value;
-        }
-        $dominio = $Dominio;
+        $dominio = $this->data["Dominio"];
         $this->data["accion"] = "Agregar";
         $this->data["nameTable"] = indexModel::bd($this->conf)->getEstructuraTable($dominio)["structure"]["nameTable"];
-        $this->data["dominio"] = $this->var["Dominio"];
-        $this->data["campos"] = indexModel::bd($this->conf)->getcamposAllAjax($this->var["Dominio"], "ADD");
-        $this->data["isImg"] = indexModel::bd($this->conf)->getEstructuraTable($this->var["Dominio"])[0]["structure"]["img"];
-        $this->data["isPDF"] = indexModel::bd($this->conf)->getEstructuraTable($this->var["Dominio"])[0]["structure"]["pdf"];
-        $this->data["isFILE"] = indexModel::bd($this->conf)->getEstructuraTable($this->var["Dominio"])[0]["structure"]["file"];
-        $this->view->show("addCatalogo.html", $this->data, $this->accion);
+        $this->data["dominio"] = $this->data["Dominio"];
+        $this->data["campos"] = indexModel::bd($this->conf)->getcamposAllAjax($this->data["Dominio"], "ADD");
+        $this->data["isImg"] = indexModel::bd($this->conf)->getEstructuraTable($this->data["Dominio"])[0]["structure"]["img"];
+        $this->data["isPDF"] = indexModel::bd($this->conf)->getEstructuraTable($this->data["Dominio"])[0]["structure"]["pdf"];
+        $this->data["isFILE"] = indexModel::bd($this->conf)->getEstructuraTable($this->data["Dominio"])[0]["structure"]["files"];
+        $this->view->show("addCatalogo.twig", $this->data, $this->accion);
     }
 }

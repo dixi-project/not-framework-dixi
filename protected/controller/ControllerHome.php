@@ -7,9 +7,6 @@ class ControllerHome extends Controller
     }
     public function main()
     {
-        foreach ($this->var as $key => $value) {
-            $this->data[$key] = $value;
-        }
         //indexModel::bd($this->conf)->controlAcceso(["1","2"]);
         $this->view->show("home.html", $this->data, $this->accion);
     }

@@ -128,79 +128,6 @@ class Catalogos
         }
     }
 
-    public static function getFieldsAll($db, $table,  $base)
-    {
-
-        //var_dump($db);
-        $relaciones = Catalogos::getEstructuraBD($db, $base);
-        //--> Estructura
-        $estructuraTable = Catalogos::getStructureTable($base, $db, $table);
-        $dat = null;
-        try {
-            // --> Obtener datos de los Campos
-            $ss = "SHOW FULL COLUMNS FROM " . $table;
-            $recordset1 = $db->prepare($ss);
-            $recordset1->execute();
-            foreach ($recordset1->fetchAll(PDO::FETCH_OBJ) as $key => $row1) {
-                $cad = null;
-                $Field = $row1->Field;
-                if ($row1->Comment != "") {
-                    $arr1 = str_split($row1->Comment);
-                    foreach ($arr1 as $key => $value) {
-                        $num = ord($value);
-                        if ($num == 147 || $num == 148) {
-                            $letra = '"';
-                        } else {
-                            $letra = $value;
-                        }
-                        $cad .= $letra;
-                    }
-                    $commentField = json_decode($cad, true);
-                    $Field = $commentField["name"];
-                }
-
-                $nameCamp = str_replace("_id", " ", $row1->Field);
-                //$nameCamp = str_replace("id_cat", " ", $row1->Field);
-                //$nameCamp = str_replace("id_tra", " ", $nameCamp);
-                //$nameCamp = str_replace("id_conf", " ", $nameCamp);
-                //$nameCamp = str_replace("id_", " ", $nameCamp);
-                $nameCamp = str_replace("_", " ", $nameCamp);
-                $ttipo = explode("(", $row1->Type);
-                $tam = str_replace(")", "", $ttipo[1]);
-                $paso = true;
-
-                if (isset($estructuraTable["structure"]["skip"])) {
-                    foreach ($estructuraTable["structure"]["skip"] as $key => $value) {
-                        if ($value == $row1->Field) {
-                            $paso = false;
-                        }
-                    }
-                }
-
-                if ($paso) {
-                    if ($row1->Field != "user_id") {
-                        $relaD = NULL;
-                        if (isset($relaciones[$table][$row1->Field])) {
-                            $relaD = array($relaciones[$table][$row1->Field], Catalogos::getData($db, $relaciones[$table][$row1->Field]["tabla"], $base));
-                        }
-                        $dat[$row1->Field] = array(
-                            "nombre" => ucfirst($nameCamp),
-                            "nombreSalida" => ucfirst($Field),
-                            "tipo" => $ttipo[0],
-                            "size" => $tam,
-                            "relaciones" => $relaD
-                        );
-                    }
-                }
-            }
-            //$relaciones = Catalogos::getEstructuraBD($db,$base);
-            return $dat;
-        } catch (PDOException $e) {
-            echo $e->getMessage() . "--" . $e->getCode();
-        }
-    }
-
-
 
     public static function getSql($base, $db, $ss)
     {
@@ -955,7 +882,7 @@ Metodos para manejo de estructuras editables
         }
     }
 
-    public static function getFieldsAllAjax($db, $table,  $base,$origin)
+    public static function getFieldsAll($db, $table,  $base)
     {
 
         //var_dump($db);
@@ -994,8 +921,82 @@ Metodos para manejo de estructuras editables
                 $nameCamp = str_replace("_", " ", $nameCamp);
                 $ttipo = explode("(", $row1->Type);
                 $tam = str_replace(")", "", $ttipo[1]);
+                $paso = true;
+
+                if (isset($estructuraTable["structure"]["skip"])) {
+                    foreach ($estructuraTable["structure"]["skip"] as $key => $value) {
+                        if ($value == $row1->Field) {
+                            $paso = false;
+                        }
+                    }
+                }
+
+                if ($paso) {
+                    if ($row1->Field != "user_id") {
+                        $relaD = NULL;
+                        if (isset($relaciones[$table][$row1->Field])) {
+                            $relaD = array($relaciones[$table][$row1->Field], Catalogos::getData($db, $relaciones[$table][$row1->Field]["tabla"], $base));
+                        }
+                        $dat[$row1->Field] = array(
+                            "nombre" => ucfirst($nameCamp),
+                            "nombreSalida" => ucfirst($Field),
+                            "tipo" => $ttipo[0],
+                            "size" => $tam,
+                            "relaciones" => $relaD
+                        );
+                    }
+                }
+            }
+            //$relaciones = Catalogos::getEstructuraBD($db,$base);
+            return $dat;
+        } catch (PDOException $e) {
+            echo $e->getMessage() . "--" . $e->getCode();
+        }
+    }
+    public static function getFieldsAllAjax($db, $table,  $base,$origin)
+    {
+
+        //var_dump($db);
+        $relaciones = Catalogos::getEstructuraBD($db, $base);
+        //var_dump($relaciones);
+        //--> Estructura
+        $estructuraTable = Catalogos::getStructureTable($base, $db, $table);
+        //var_dump($estructuraTable);
+        $dat = null;
+        try {
+            // --> Obtener datos de los Campos
+            $ss = "SHOW FULL COLUMNS FROM " . $table;
+            $recordset1 = $db->prepare($ss);
+            $recordset1->execute();
+            foreach ($recordset1->fetchAll(PDO::FETCH_OBJ) as $key => $row1) {
+                //echo $row1->Field;
+                $cad = null;
+                $Field = $row1->Field;
+                if ($row1->Comment != "") {
+                    $arr1 = str_split($row1->Comment);
+                    foreach ($arr1 as $key => $value) {
+                        $num = ord($value);
+                        if ($num == 147 || $num == 148) {
+                            $letra = '"';
+                        } else {
+                            $letra = $value;
+                        }
+                        $cad .= $letra;
+                    }
+                    $commentField = json_decode($cad, true);
+                    $Field = $commentField["name"];
+                }
+
+                $nameCamp = str_replace("_id", " ", $row1->Field);
+                //$nameCamp = str_replace("id_cat", " ", $row1->Field);
+                //$nameCamp = str_replace("id_tra", " ", $nameCamp);
+                //$nameCamp = str_replace("id_conf", " ", $nameCamp);
+                //$nameCamp = str_replace("id_", " ", $nameCamp);
+                $nameCamp = str_replace("_", " ", $nameCamp);
+                $ttipo = explode("(", $row1->Type);
+                $tam = str_replace(")", "", $ttipo[1]);
                 $paso = false;
-               
+            
                 if (isset($estructuraTable[0]["structure"]["views"][$origin])) {
                     foreach ($estructuraTable[0]["structure"]["views"][$origin] as $key => $value) {
                         if ($row1->Field == $key) {
@@ -1017,6 +1018,17 @@ Metodos para manejo de estructuras editables
                             "relaciones" => $relaD
                         );
                     }
+                }else{
+                    if (isset($relaciones[$table][$row1->Field])) {
+                        $relaD = array($relaciones[$table][$row1->Field], Catalogos::getData($db, $relaciones[$table][$row1->Field]["tabla"], $base));
+                    }
+                    $dat[$row1->Field] = array(
+                        "nombre" => ucfirst($nameCamp),
+                        "nombreSalida" => ucfirst($Field),
+                        "tipo" => $ttipo[0],
+                        "size" => $tam,
+                        "relaciones" => $relaD
+                    );
                 }
             }
             //$relaciones = Catalogos::getEstructuraBD($db,$base);

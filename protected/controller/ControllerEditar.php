@@ -7,18 +7,17 @@ class ControllerEditar extends Controller
     }
     public function main()
     {
-        foreach ($this->var as $key => $value) {
-            $this->data[$key] = $value;
-        }
+    
         $this->data["accion"] = "Editar";
-        $dominio = $this->var["Dominio"];
-        $this->data["nameTable"] = indexModel::bd($this->conf)->getEstructuraTable($dominio)["structure"]["nameTable"];
+        $dominio = $this->data["Dominio"];
+        $r = indexModel::bd($this->conf)->getEstructuraTable($dominio);
+        $this->data["nameTable"] = indexModel::bd($this->conf)->getEstructuraTable($dominio)[0]["structure"]["name"];
         $this->data["dominio"] = $dominio;
         $this->data["campos"] = indexModel::bd($this->conf)->getcamposAll($dominio);
-        $this->data["datos"] = indexModel::bd($this->conf)->getDominio($dominio, $this->var["idReg"]);
-        $this->data["isImg"] = indexModel::bd($this->conf)->getEstructuraTable($dominio)["structure"]["img"];
-        $this->data["isPDF"] = indexModel::bd($this->conf)->getEstructuraTable($this->var["Dominio"])["structure"]["pdf"];
-        $this->data["isFILE"] = indexModel::bd($this->conf)->getEstructuraTable($this->var["Dominio"])["structure"]["file"];
-        $this->view->show("addCatalogo.html", $this->data, $this->accion);
+        $this->data["datos"] = indexModel::bd($this->conf)->getDominio($dominio, $this->data["idReg"]);
+        $this->data["isImg"] = indexModel::bd($this->conf)->getEstructuraTable($dominio)[0]["structure"]["img"];
+        $this->data["isPDF"] = indexModel::bd($this->conf)->getEstructuraTable($dominio)[0]["structure"]["pdf"];
+        $this->data["isFILE"] = indexModel::bd($this->conf)->getEstructuraTable($dominio)[0]["structure"]["files"];
+        $this->view->show("addCatalogo.twig", $this->data, $this->accion);
     }
 }

@@ -553,18 +553,18 @@ class indexModel
         return $pass;
     }
 
-    public function controlAcceso2($conf, $dat)
+    public function check_in_range($fecha_inicio, $fecha_fin, $fecha)
     {
-        //var_dump($conf);
-        //var_dump($dat);
-
-
-
-
-        $sqlValidate1 = "SELECT * FROM campana WHERE id = {$idReg2}";
-        $campana = indexModel::bd($conf)->getSQL($sqlValidate1)[0];
+        $fecha_inicio = strtotime($fecha_inicio);
+        $fecha_fin = strtotime($fecha_fin);
+        $fecha = strtotime($fecha);
+        if (($fecha >= $fecha_inicio) && ($fecha <= $fecha_fin))
+            return true;
+        else 
+            return false;
+        
     }
-
+    
     public function controlAcceso($tabla)
     {
         /*1.-Saber si es un usuario que esta logeado
@@ -583,19 +583,13 @@ class indexModel
             //1.-Buscar en la tabla de modulos la tabla para extraer id del modulo
             //2.-Extraer el id del rol
             //3.-Si en la tabla de persmiso existe el rol con el modulo y tiene permiso entonces dejamos pasar
-
             if ($tabla != "") {
                 $query = "SELECT * FROM modulo WHERE tabla ='$tabla'";
                 $modul = indexModel::bd($this->conf)->getSQL($query)[0];
-
                 $id_modulo = $modul->id;
                 $idRol;
-
                 $query = "SELECT * FROM permisos WHERE rol_id = '$idRol' AND modulo_id = '$id_modulo'";
                 $tables = indexModel::bd($this->conf)->getSQL($query)[0];
-
-
-
                 if (
                     $tables->permiso_crear_id != 1 && $tables->permiso_leer_id  != 1
                     && $tables->permiso_actualizar_id != 1 && $tables->permiso_borrar_id != 1
