@@ -141,7 +141,7 @@ class View {
         //var_dump($mandarData['permisosRol']);
         // --> obtener modulo actual
         $sslq1="SELECT id FROM modulo WHERE tabla = '{$dominio}'";
-        echo $sslq1."<br>";
+        //echo $sslq1."<br>";
         $modulo=(object) indexModel::bd($this->conf)->getSQL($sslq1)[0];
         // --> obtener permisos
         $sslq="SELECT * FROM permisos WHERE rol_id=".$idRol." AND modulo_id = ".$modulo->id;
