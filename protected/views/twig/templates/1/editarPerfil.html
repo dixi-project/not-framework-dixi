@@ -8,7 +8,8 @@
                     <h2>{{action}} Perfil</h2>
                     <p>{{empresa.empresa}}</p>
                 </div>
-                <form id="frm1" name="frm1" action="{{pathCMSSite}}actualizar-perfil"  method="post" enctype="multipart/form-data" class="form-horizontal bordered-row" autocomplete="off">
+                <form id="frm1" name="frm1" action="{{pathCMSSite}}actualizar-perfil" method="post"
+                    enctype="multipart/form-data" class="form-horizontal bordered-row" autocomplete="off">
                     <div class="panel panel-default">
                         <div class="panel-body">
 
@@ -18,7 +19,8 @@
                                         Nombre
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control form-control"  id="txtNombre" name="txtNombre" value="{{datos.0.nombre}}">
+                                        <input type="text" class="form-control form-control" id="txtNombre"
+                                            name="txtNombre" value="{{datos.0.user}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -26,7 +28,8 @@
                                         Dirección
                                     </label>
                                     <div class="col-sm-10">
-                                        <textarea class="form-control form-control"  id="txtDireccion" name="txtDireccion">{{datos.0.direccion}}</textarea>
+                                        <textarea class="form-control form-control" id="txtDireccion"
+                                            name="txtDireccion">{{datos.0.direccion}}</textarea>
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -34,7 +37,8 @@
                                         Correo
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="email" class="form-control form-control"  id="txtCorreo" name="txtCorreo" value="{{datos.0.correo}}">
+                                        <input type="email" class="form-control form-control" id="txtCorreo"
+                                            name="txtCorreo" value="{{datos.0.email}}">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -42,29 +46,32 @@
                                         Password
                                     </label>
                                     <div class="col-sm-10">
-                                        <input type="text" class="form-control form-control"  id="NtxtCC1" name="NtxtCC1" autocomplete="off">
+                                        <input type="text" class="form-control form-control" id="NtxtCC1" name="NtxtCC1"
+                                            autocomplete="off">
                                         <div class="help-block">Capturar solo si decide cambiar el password</div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label">Imagen:</label>
                                     <div class="col-sm-10">
-                                        <input type="file" data-classbutton="btn btn-default" data-classinput="form-control inline" class="form-control filestyle"  id="txFile" name="txFile">
+                                        <input type="file" data-classbutton="btn btn-default"
+                                            data-classinput="form-control inline" class="form-control filestyle"
+                                            id="txFile" name="txFile">
                                     </div>
-                               </div>
+                                </div>
                             </fieldset>
                             <div class="form-group">
                                 <br>
                                 <div class="col-lg-offset-2 col-lg-10">
-                                    
+
                                     <button type="submit" class="btn btn-sm btn-success" name="cmdGuardar">
                                         <i class="glyph-icon icon-save"></i>
                                         Guardar</button>
                                 </div>
-                            </div>     
+                            </div>
                         </div>
                     </div>
-                </form>                     
+                </form>
             </div>
         </div>
     </div>

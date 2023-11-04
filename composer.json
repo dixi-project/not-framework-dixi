@@ -1,5 +1,7 @@
 {
-    "require-dev": {
-        "phpdocumentor/phpdocumentor": "2.*"
+    "require": {
+        "phpmailer/phpmailer": "^6.8",
+        "twig/twig": "^2.0",
+        "aws/aws-sdk-php": "^3.281"
     }
 }

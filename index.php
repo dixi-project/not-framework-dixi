@@ -12,7 +12,7 @@
  * @license http://opensource.org/licenses/gpl-license.php GNU Public License
  * @access public
  */
-ini_set('display_errors',0);
+ini_set('display_errors', 0);
 error_reporting(E_ALL);
 /**
  * ••• Descripción •••
@@ -22,7 +22,7 @@ error_reporting(E_ALL);
  * @access public
  * @see dixi
  */
-$dixi=dirname(__FILE__).'/framework/DIXI.php';
+$dixi = dirname(__FILE__) . '/framework/DIXI.php';
 /**
  * ••• Descripción •••
  * » Link de Acceso a los datos de configuración
@@ -31,9 +31,8 @@ $dixi=dirname(__FILE__).'/framework/DIXI.php';
  * @access private
  * @see dixi
  */
-$config=dirname(__FILE__).'/protected/config/data.php';
+$config = dirname(__FILE__) . '/protected/config/data.php';
 // --> LLama el archivo del framework
-require_once($dixi);
+require_once $dixi;
 // --> Creación de la aplicación Web
 DIXI::crearAplicacionWeb($config)->run();
-?>
