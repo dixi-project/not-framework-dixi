@@ -34,6 +34,6 @@ $dixi = dirname(__FILE__) . '/framework/DIXI.php';
  */
 $config = dirname(__FILE__) . '/protected/config/data.php';
 // --> LLama el archivo del framework
-require_once($dixi);
+require_once $dixi;
 // --> Creación de la aplicación Web
 DIXI::crearAplicacionWeb($config)->run();

@@ -7,7 +7,7 @@ class Catalogos
 
     public static function getEstructuraBD($db, $base)
     {
-        $comment = NULL;
+        $comment = null;
         $sd = dirname(__FILE__) . "/../../includes/structure/structureBD.str";
         $handle = fopen($sd, "r");
         if ($handle) {
@@ -21,7 +21,7 @@ class Catalogos
 
     public static function getStructureTable($nameBase, $db, $table)
     {
-        $comment = NULL;
+        $comment = null;
         $sd = dirname(__FILE__) . "/../../includes/structure/structure_{$table}.str";
         //echo $sd."<br>";
         $handle = fopen($sd, "r");
@@ -100,9 +100,25 @@ class Catalogos
                 //$nameCamp = str_replace("id_conf", " ", $nameCamp);
                 //$nameCamp = str_replace("id_", " ", $nameCamp);
                 //$nameCamp = str_replace("_", " ", $nameCamp);
+                if (!is_null($cad)) {
+                    if (@array_key_exists($row1->Field, $cad)) {
+                    } else {
+                        $entrar = 0;
+                        //var_dump($estructuraTable[0]["structure"]["views"]["REPORT"]);
+                        if (isset($estructuraTable["structure"]["skip"])) {
+                            foreach ($estructuraTable["structure"]["skip"] as $key => $value) {
 
-                if (@array_key_exists($row1->Field, $cad)) {
-
+                                if ($row1->Field == $value) {
+                                    $entrar = 1;
+                                }
+                            }
+                            if ($entrar == 0) {
+                                $dat[$row1->Field] = ucfirst($nameCamp);
+                            }
+                        } else {
+                            $dat[$row1->Field] = ucfirst($nameCamp);
+                        }
+                    }
                 } else {
                     $entrar = 0;
                     //var_dump($estructuraTable[0]["structure"]["views"]["REPORT"]);
@@ -116,18 +132,17 @@ class Catalogos
                         if ($entrar == 0) {
                             $dat[$row1->Field] = ucfirst($nameCamp);
                         }
-                    }else{
+                    } else {
                         $dat[$row1->Field] = ucfirst($nameCamp);
                     }
-                    
                 }
+
             }
             return $dat;
         } catch (PDOException $e) {
             echo $e->getMessage() . "--" . $e->getCode();
         }
     }
-
 
     public static function getSql($base, $db, $ss)
     {
@@ -156,33 +171,32 @@ class Catalogos
                 if ($row1->Field == "empresa_id" && $table != "empresa") {
                     $me = 1;
                 }
-            } 
+            }
 
             if ($me == 1) {
                 $idEmpresa = $_COOKIE["empresaID"];
-                if($table=="empresa"){
-                    $ss = "SELECT * FROM $table WHERE id = $idEmpresa or id 
+                if ($table == "empresa") {
+                    $ss = "SELECT * FROM $table WHERE id = $idEmpresa or id
                             IN (SELECT id FROM empresa WHERE empresa_id='$idEmpresa' )  ORDER BY id DESC";
-                }else{
+                } else {
                     if (is_null($limite)) {
                         if (is_null($id)) {
-                            $ss = "SELECT * FROM $table WHERE (empresa_id = $idEmpresa or empresa_id 
+                            $ss = "SELECT * FROM $table WHERE (empresa_id = $idEmpresa or empresa_id
                             IN (SELECT id FROM empresa WHERE empresa_id='$idEmpresa') ) AND $where ORDER BY id DESC ";
                         } else {
-                            $ss = "SELECT * FROM $table WHERE id = " . $id . " AND (empresa_id = $idEmpresa or empresa_id 
+                            $ss = "SELECT * FROM $table WHERE id = " . $id . " AND (empresa_id = $idEmpresa or empresa_id
                             IN (SELECT id FROM empresa WHERE empresa_id='$idEmpresa')) ORDER BY id DESC";
                         }
                     } else {
                         if (is_null($id)) {
-                            $ss = "SELECT * FROM $table WHERE empresa_id = $idEmpresa or empresa_id 
+                            $ss = "SELECT * FROM $table WHERE empresa_id = $idEmpresa or empresa_id
                             IN (SELECT id FROM empresa WHERE empresa_id='$idEmpresa') ORDER BY " . $limite["campo"] . " " . $limite["orden"] . " LIMIT " . $limite["limite"] . "";
                         } else {
-                            $ss = "SELECT * FROM $table WHERE id = " . $id . " AND (empresa_id = $idEmpresa or empresa_id 
+                            $ss = "SELECT * FROM $table WHERE id = " . $id . " AND (empresa_id = $idEmpresa or empresa_id
                             IN (SELECT id FROM empresa WHERE empresa_id='$idEmpresa')) ORDER BY " . $limite["campo"] . " " . $limite["orden"] . " LIMIT " . $limite["limite"] . "";
                         }
                     }
                 }
-                
             } else {
                 if (is_null($limite)) {
                     if (is_null($id)) {
@@ -235,33 +249,32 @@ class Catalogos
                 if ($row1->Field == "empresa_id" && $table != "empresa") {
                     $me = 1;
                 }
-            } 
+            }
 
             if ($me == 1) {
                 $idEmpresa = $_COOKIE["empresaID"];
-                if($table=="empresa"){
-                    $ss = "SELECT * FROM $table WHERE id = $idEmpresa or id 
+                if ($table == "empresa") {
+                    $ss = "SELECT * FROM $table WHERE id = $idEmpresa or id
                             IN (SELECT id FROM empresa WHERE empresa_id='$idEmpresa') ORDER BY id DESC";
-                }else{
+                } else {
                     if (is_null($limite)) {
                         if (is_null($id)) {
-                            $ss = "SELECT * FROM $table WHERE empresa_id = $idEmpresa or empresa_id 
+                            $ss = "SELECT * FROM $table WHERE empresa_id = $idEmpresa or empresa_id
                             IN (SELECT id FROM empresa WHERE empresa_id='$idEmpresa') ORDER BY id DESC ";
                         } else {
-                            $ss = "SELECT * FROM $table WHERE id = " . $id . " AND (empresa_id = $idEmpresa or empresa_id 
+                            $ss = "SELECT * FROM $table WHERE id = " . $id . " AND (empresa_id = $idEmpresa or empresa_id
                             IN (SELECT id FROM empresa WHERE empresa_id='$idEmpresa')) ORDER BY id DESC";
                         }
                     } else {
                         if (is_null($id)) {
-                            $ss = "SELECT * FROM $table WHERE empresa_id = $idEmpresa or empresa_id 
+                            $ss = "SELECT * FROM $table WHERE empresa_id = $idEmpresa or empresa_id
                             IN (SELECT id FROM empresa WHERE empresa_id='$idEmpresa') ORDER BY " . $limite["campo"] . " " . $limite["orden"] . " LIMIT " . $limite["limite"] . "";
                         } else {
-                            $ss = "SELECT * FROM $table WHERE id = " . $id . " AND (empresa_id = $idEmpresa or empresa_id 
+                            $ss = "SELECT * FROM $table WHERE id = " . $id . " AND (empresa_id = $idEmpresa or empresa_id
                             IN (SELECT id FROM empresa WHERE empresa_id='$idEmpresa')) ORDER BY " . $limite["campo"] . " " . $limite["orden"] . " LIMIT " . $limite["limite"] . "";
                         }
                     }
                 }
-                
             } else {
                 if (is_null($limite)) {
                     if (is_null($id)) {
@@ -317,6 +330,7 @@ class Catalogos
                 $where = substr($where, 0, -4);
                 $ss = "SELECT * FROM {$table} WHERE {$where}  ORDER BY id DESC";
             }
+            //echo $ss;
             $recordset = $db->prepare($ss);
             $recordset->execute();
             $o = 0;
@@ -382,8 +396,8 @@ class Catalogos
                 "rol_id" => array(
                     "tabla" => "role",
                     "campoReturn" => array("role"),
-                )
-            )
+                ),
+            ),
         );
         return $relaciones;
     }
@@ -418,7 +432,6 @@ class Catalogos
         }
     }
 
-
     public static function guardarRegistro($conf, $nameBase, $path, $bd, $tabla, $campos, $camposRelacionados)
     {
         $camposD = null;
@@ -428,7 +441,7 @@ class Catalogos
         foreach ($cam as $key => $value) {
             if (($key == "fecha" && !isset($campos["fecha"])) or ($key == "fecha_registro" && !isset($campos["fecha_registro"])) or ($key == "date_update" && !isset($campos["date_update"])) or ($key == "registration_date" && !isset($campos["registration_date"]))) {
                 $camposD .= $key . ",";
-                $valoresD .= "'".date("Y-m-d H:i:s")."',";
+                $valoresD .= "'" . date("Y-m-d H:i:s") . "',";
             } elseif ($key == "user_id") {
                 if (isset($_COOKIE["idUser"]) && $_COOKIE["idUser"] > 0) {
                     $camposD .= $key . ",";
@@ -457,11 +470,11 @@ class Catalogos
                     $valoresD .= "MD5('" . $value . "'),";
                 }
             } elseif ($key == "birthdate") {
-                $y =  substr($value, 6, 4);
-                $m =  substr($value, 3, 2);
-                $d =  substr($value, 0, 2);
-                $h =  substr($value, 11, 2);
-                $n =  substr($value, 14, 2);
+                $y = substr($value, 6, 4);
+                $m = substr($value, 3, 2);
+                $d = substr($value, 0, 2);
+                $h = substr($value, 11, 2);
+                $n = substr($value, 14, 2);
                 $nv = $y . "-" . $m . "-" . $d . " " . $h . ":" . $n;
                 $camposD .= $key . ",";
                 $valoresD .= "'" . $value . "',";
@@ -480,6 +493,7 @@ class Catalogos
         $camposD = substr($camposD, 0, -1);
         $valoresD = substr($valoresD, 0, -1);
         $ss = "INSERT INTO $tabla ($camposD) VALUES ($valoresD)";
+        //echo $ss;
         $recordset = $bd->prepare($ss);
         $recordset->execute();
         $idReg = $bd->lastInsertId();
@@ -498,13 +512,12 @@ class Catalogos
                 "accion" => "Insertar",
                 "sql" => $ss,
                 "tabla" => $tabla,
-                "fecha_hora" => $time2
+                "fecha_hora" => $time2,
             );
 
             $res = Catalogos::InsertarMongoDB($conexion, $nuevoRegistro);
             /*--------------------Fin de la conexion a mongo----------------*/
         }
-
 
         // --> Guardar imagen
         if (isset($_FILES["txFile"])) {
@@ -521,10 +534,19 @@ class Catalogos
             }
             $add = $estructura . "/" . $idReg . "." . strtolower($ext[1]);
             if (move_uploaded_file($_FILES["txFile"]["tmp_name"], $add)) {
-                $ex =  strtolower($ext[1]);
-                if ($ex != "jpg") @unlink($estructura . "$idReg.jpg");
-                if ($ex != "png") @unlink($estructura . "$idReg.png");
-                if ($ex != "gif") @unlink($estructura . "$idReg.gif");
+                $ex = strtolower($ext[1]);
+                if ($ex != "jpg") {
+                    @unlink($estructura . "$idReg.jpg");
+                }
+
+                if ($ex != "png") {
+                    @unlink($estructura . "$idReg.png");
+                }
+
+                if ($ex != "gif") {
+                    @unlink($estructura . "$idReg.gif");
+                }
+
             } else {
             }
         }
@@ -586,7 +608,7 @@ class Catalogos
         $ss = "DELETE FROM $tabla WHERE id = " . $id;
         $recordset = $bd->prepare($ss);
         $x = $recordset->execute();
-          if (!$x) {
+        if (!$x) {
             print_r($bd->errorInfo());
         }
 
@@ -604,14 +626,12 @@ class Catalogos
                 "accion" => "Borrar",
                 "sql" => $ss,
                 "tabla" => $tabla,
-                "fecha_hora" => $time2
+                "fecha_hora" => $time2,
             );
 
             $res = Catalogos::InsertarMongoDB($conexion, $nuevoRegistro);
             /*--------------------Fin de la conexion a mongo----------------*/
         }
-
-
 
         return $id;
     }
@@ -624,7 +644,7 @@ class Catalogos
         $cam = Catalogos::getFields($nameBase, $bd, $tabla);
         foreach ($cam as $key => $value) {
             if (($key == "fecha" && !isset($campos["fecha"])) or ($key == "fecha_modificacion" && !isset($campos["fecha_modificacion"])) or ($key == "date_update" && !isset($campos["date_update"]))) {
-                $camposD .= $key . "='".date("Y-m-d H:i:s")."',";
+                $camposD .= $key . "='" . date("Y-m-d H:i:s") . "',";
             } elseif ($key == "user_id" && ($tabla != "user_has_servicio")) {
                 $camposD .= $key . "=" . $_COOKIE["idUser"] . ",";
             } elseif ($key == "usuarios_id" && ($tabla != "user_has_servicio")) {
@@ -638,11 +658,11 @@ class Catalogos
                 }
             } else {
                 if ($key == "birthdate") {
-                    $y =  substr($value, 6, 4);
-                    $m =  substr($value, 3, 2);
-                    $d =  substr($value, 0, 2);
-                    $h =  substr($value, 11, 2);
-                    $n =  substr($value, 14, 2);
+                    $y = substr($value, 6, 4);
+                    $m = substr($value, 3, 2);
+                    $d = substr($value, 0, 2);
+                    $h = substr($value, 11, 2);
+                    $n = substr($value, 14, 2);
                     $nv = $y . "-" . $m . "-" . $d . " " . $h . ":" . $n;
                     $camposD .= $key . "='" . $value . "',";
                 } else {
@@ -677,22 +697,17 @@ class Catalogos
                 "accion" => "Editar",
                 "sql" => $ss,
                 "tabla" => $tabla,
-                "fecha_hora" => $time2
+                "fecha_hora" => $time2,
             );
 
             $res = Catalogos::InsertarMongoDB($conexion, $nuevoRegistro);
             /*--------------------Fin de la conexion a mongo----------------*/
         }
 
-
-
-
-
-
-
         // --> Guardar imagen
         if (isset($_FILES["txFile"])) {
             $estructura = dirname(__FILE__) . "/../../includes/images/{$tabla}/";
+            $estructura32 = $conf["pathSite"] . "includes/images/{$tabla}/";
             if (!file_exists($estructura)) {
                 if (!mkdir($estructura, 0777, true)) {
                     die('Fallo al crear las carpetas...');
@@ -705,11 +720,27 @@ class Catalogos
             }
             $add = $estructura . "" . $idReg . "." . strtolower($ext[1]);
             if (move_uploaded_file($_FILES["txFile"]["tmp_name"], $add)) {
-                $ex =  strtolower($ext[1]);
-                if ($ex != "jpg") @unlink($estructura . "$idReg.jpg");
-                if ($ex != "png") @unlink($estructura . "$idReg.png");
-                if ($ex != "gif") @unlink($estructura . "$idReg.gif");
+                $ex = strtolower($ext[1]);
+                if ($ex != "jpg") {
+                    @unlink($estructura . "$idReg.jpg");
+                }
+
+                if ($ex != "png") {
+                    @unlink($estructura . "$idReg.png");
+                }
+
+                if ($ex != "gif") {
+                    @unlink($estructura . "$idReg.gif");
+                }
+
+                $nig = $estructura32 . "$idReg.jpg";
+
+                $ss54 = "UPDATE $tabla SET url = '{$nig}'  WHERE id = " . $idReg;
+
+                $recordset54 = $bd->prepare($ss54);
+                $recordset54->execute();
             } else {
+                echo "Error al subir la imagen";
             }
         }
         // --> Guardar PDF
@@ -796,7 +827,7 @@ class Catalogos
     public static function InsertarMongoDB($collection, $array)
     {
 
-        $insertOneResult =  $collection->insertOne($array);
+        $insertOneResult = $collection->insertOne($array);
 
         return $insertOneResult->getInsertedCount();
     }
@@ -817,11 +848,11 @@ class Catalogos
         return $deleteResult->getDeletedCount();
     }
 
-/*
-Metodos para manejo de estructuras editables
-*/
+    /*
+    Metodos para manejo de estructuras editables
+     */
 
-    public static function getFieldsAjax($nameBase, $db, $table,$origin)
+    public static function getFieldsAjax($nameBase, $db, $table, $origin)
     {
         $dat = null;
         $cad = array(
@@ -857,8 +888,24 @@ Metodos para manejo de estructuras editables
                 //$nameCamp = str_replace("id_", " ", $nameCamp);
                 //$nameCamp = str_replace("_", " ", $nameCamp);
 
-                if (@array_key_exists($row1->Field, $cad)) {
-
+                // --> DIXI
+                if (!is_null($cad)) {
+                    if (@array_key_exists($row1->Field, $cad)) {
+                    } else {
+                        $entrar = 0;
+                        if (isset($estructuraTable[0]["structure"]["views"][$origin]) && !empty($estructuraTable[0]["structure"]["views"][$origin])) {
+                            foreach ($estructuraTable[0]["structure"]["views"][$origin] as $key => $value) {
+                                if ($row1->Field == $key) {
+                                    $entrar = 1;
+                                }
+                            }
+                            if ($entrar == 1) {
+                                $dat[$row1->Field] = ucfirst($nameCamp);
+                            }
+                        } else {
+                            $dat[$row1->Field] = ucfirst($nameCamp);
+                        }
+                    }
                 } else {
                     $entrar = 0;
                     if (isset($estructuraTable[0]["structure"]["views"][$origin]) && !empty($estructuraTable[0]["structure"]["views"][$origin])) {
@@ -870,11 +917,11 @@ Metodos para manejo de estructuras editables
                         if ($entrar == 1) {
                             $dat[$row1->Field] = ucfirst($nameCamp);
                         }
-                    }else{
+                    } else {
                         $dat[$row1->Field] = ucfirst($nameCamp);
                     }
-                    
                 }
+
             }
             return $dat;
         } catch (PDOException $e) {
@@ -882,7 +929,7 @@ Metodos para manejo de estructuras editables
         }
     }
 
-    public static function getFieldsAll($db, $table,  $base)
+    public static function getFieldsAll($db, $table, $base)
     {
 
         //var_dump($db);
@@ -933,7 +980,7 @@ Metodos para manejo de estructuras editables
 
                 if ($paso) {
                     if ($row1->Field != "user_id") {
-                        $relaD = NULL;
+                        $relaD = null;
                         if (isset($relaciones[$table][$row1->Field])) {
                             $relaD = array($relaciones[$table][$row1->Field], Catalogos::getData($db, $relaciones[$table][$row1->Field]["tabla"], $base));
                         }
@@ -942,7 +989,7 @@ Metodos para manejo de estructuras editables
                             "nombreSalida" => ucfirst($Field),
                             "tipo" => $ttipo[0],
                             "size" => $tam,
-                            "relaciones" => $relaD
+                            "relaciones" => $relaD,
                         );
                     }
                 }
@@ -953,7 +1000,7 @@ Metodos para manejo de estructuras editables
             echo $e->getMessage() . "--" . $e->getCode();
         }
     }
-    public static function getFieldsAllAjax($db, $table,  $base,$origin)
+    public static function getFieldsAllAjax($db, $table, $base, $origin)
     {
 
         //var_dump($db);
@@ -996,7 +1043,7 @@ Metodos para manejo de estructuras editables
                 $ttipo = explode("(", $row1->Type);
                 $tam = str_replace(")", "", $ttipo[1]);
                 $paso = false;
-            
+
                 if (isset($estructuraTable[0]["structure"]["views"][$origin])) {
                     foreach ($estructuraTable[0]["structure"]["views"][$origin] as $key => $value) {
                         if ($row1->Field == $key) {
@@ -1006,7 +1053,7 @@ Metodos para manejo de estructuras editables
                 }
                 if ($paso) {
                     if ($row1->Field != "user_id") {
-                        $relaD = NULL;
+                        $relaD = null;
                         if (isset($relaciones[$table][$row1->Field])) {
                             $relaD = array($relaciones[$table][$row1->Field], Catalogos::getData($db, $relaciones[$table][$row1->Field]["tabla"], $base));
                         }
@@ -1015,10 +1062,10 @@ Metodos para manejo de estructuras editables
                             "nombreSalida" => ucfirst($Field),
                             "tipo" => $ttipo[0],
                             "size" => $tam,
-                            "relaciones" => $relaD
+                            "relaciones" => $relaD,
                         );
                     }
-                }else{
+                } else {
                     if (isset($relaciones[$table][$row1->Field])) {
                         $relaD = array($relaciones[$table][$row1->Field], Catalogos::getData($db, $relaciones[$table][$row1->Field]["tabla"], $base));
                     }
@@ -1027,7 +1074,7 @@ Metodos para manejo de estructuras editables
                         "nombreSalida" => ucfirst($Field),
                         "tipo" => $ttipo[0],
                         "size" => $tam,
-                        "relaciones" => $relaD
+                        "relaciones" => $relaD,
                     );
                 }
             }
@@ -1038,17 +1085,16 @@ Metodos para manejo de estructuras editables
         }
     }
 
-
-    public static function guardarRegistroAjax($origin,$conf, $nameBase, $path, $bd, $tabla, $campos, $camposRelacionados)
+    public static function guardarRegistroAjax($origin, $conf, $nameBase, $path, $bd, $tabla, $campos, $camposRelacionados)
     {
         $camposD = null;
         $valoresD = null;
         // --> Inserta campos de fecha y fecha registro de forma automatica
-        $cam = Catalogos::getFieldsAjax($nameBase, $bd, $tabla,$origin);
+        $cam = Catalogos::getFieldsAjax($nameBase, $bd, $tabla, $origin);
         foreach ($cam as $key => $value) {
             if (($key == "fecha" && !isset($campos["fecha"])) or ($key == "fecha_registro" && !isset($campos["fecha_registro"])) or ($key == "date_update" && !isset($campos["date_update"])) or ($key == "registration_date" && !isset($campos["registration_date"]))) {
                 $camposD .= $key . ",";
-                $valoresD .= "'".date("Y-m-d H:i:s")."',";
+                $valoresD .= "'" . date("Y-m-d H:i:s") . "',";
             } elseif ($key == "user_id") {
                 if (isset($_COOKIE["idUser"]) && $_COOKIE["idUser"] > 0) {
                     $camposD .= $key . ",";
@@ -1077,11 +1123,11 @@ Metodos para manejo de estructuras editables
                     $valoresD .= "MD5('" . $value . "'),";
                 }
             } elseif ($key == "birthdate") {
-                $y =  substr($value, 6, 4);
-                $m =  substr($value, 3, 2);
-                $d =  substr($value, 0, 2);
-                $h =  substr($value, 11, 2);
-                $n =  substr($value, 14, 2);
+                $y = substr($value, 6, 4);
+                $m = substr($value, 3, 2);
+                $d = substr($value, 0, 2);
+                $h = substr($value, 11, 2);
+                $n = substr($value, 14, 2);
                 $nv = $y . "-" . $m . "-" . $d . " " . $h . ":" . $n;
                 $camposD .= $key . ",";
                 $valoresD .= "'" . $value . "',";
@@ -1118,13 +1164,12 @@ Metodos para manejo de estructuras editables
                 "accion" => "Insertar",
                 "sql" => $ss,
                 "tabla" => $tabla,
-                "fecha_hora" => $time2
+                "fecha_hora" => $time2,
             );
 
             $res = Catalogos::InsertarMongoDB($conexion, $nuevoRegistro);
             /*--------------------Fin de la conexion a mongo----------------*/
         }
-
 
         // --> Guardar imagen
         if (isset($_FILES["txFile"])) {
@@ -1141,10 +1186,19 @@ Metodos para manejo de estructuras editables
             }
             $add = $estructura . "/" . $idReg . "." . strtolower($ext[1]);
             if (move_uploaded_file($_FILES["txFile"]["tmp_name"], $add)) {
-                $ex =  strtolower($ext[1]);
-                if ($ex != "jpg") @unlink($estructura . "$idReg.jpg");
-                if ($ex != "png") @unlink($estructura . "$idReg.png");
-                if ($ex != "gif") @unlink($estructura . "$idReg.gif");
+                $ex = strtolower($ext[1]);
+                if ($ex != "jpg") {
+                    @unlink($estructura . "$idReg.jpg");
+                }
+
+                if ($ex != "png") {
+                    @unlink($estructura . "$idReg.png");
+                }
+
+                if ($ex != "gif") {
+                    @unlink($estructura . "$idReg.gif");
+                }
+
             } else {
             }
         }
@@ -1201,17 +1255,15 @@ Metodos para manejo de estructuras editables
         return $idReg;
     }
 
-  
-
     public static function editarRegistroAjax($origin, $conf, $nameBase, $path, $bd, $tabla, $campos, $camposRelacionados, $id)
     {
         $camposD = null;
         $valoresD = null;
         // --> Inserta campos de fecha y fecha registro de forma automatica
-        $cam = Catalogos::getFieldsAjax($nameBase, $bd, $tabla,$origin);
+        $cam = Catalogos::getFieldsAjax($nameBase, $bd, $tabla, $origin);
         foreach ($cam as $key => $value) {
             if (($key == "fecha" && !isset($campos["fecha"])) or ($key == "fecha_modificacion" && !isset($campos["fecha_modificacion"])) or ($key == "date_update" && !isset($campos["date_update"]))) {
-                $camposD .= $key . "='".date("Y-m-d H:i:s")."',";
+                $camposD .= $key . "='" . date("Y-m-d H:i:s") . "',";
             } elseif ($key == "user_id" && ($tabla != "user_has_servicio")) {
                 $camposD .= $key . "=" . $_COOKIE["idUser"] . ",";
             } elseif ($key == "usuarios_id" && ($tabla != "user_has_servicio")) {
@@ -1225,11 +1277,11 @@ Metodos para manejo de estructuras editables
                 }
             } else {
                 if ($key == "birthdate") {
-                    $y =  substr($value, 6, 4);
-                    $m =  substr($value, 3, 2);
-                    $d =  substr($value, 0, 2);
-                    $h =  substr($value, 11, 2);
-                    $n =  substr($value, 14, 2);
+                    $y = substr($value, 6, 4);
+                    $m = substr($value, 3, 2);
+                    $d = substr($value, 0, 2);
+                    $h = substr($value, 11, 2);
+                    $n = substr($value, 14, 2);
                     $nv = $y . "-" . $m . "-" . $d . " " . $h . ":" . $n;
                     $camposD .= $key . "='" . $value . "',";
                 } else {
@@ -1264,18 +1316,12 @@ Metodos para manejo de estructuras editables
                 "accion" => "Editar",
                 "sql" => $ss,
                 "tabla" => $tabla,
-                "fecha_hora" => $time2
+                "fecha_hora" => $time2,
             );
 
             $res = Catalogos::InsertarMongoDB($conexion, $nuevoRegistro);
             /*--------------------Fin de la conexion a mongo----------------*/
         }
-
-
-
-
-
-
 
         // --> Guardar imagen
         if (isset($_FILES["txFile"])) {
@@ -1292,10 +1338,19 @@ Metodos para manejo de estructuras editables
             }
             $add = $estructura . "" . $idReg . "." . strtolower($ext[1]);
             if (move_uploaded_file($_FILES["txFile"]["tmp_name"], $add)) {
-                $ex =  strtolower($ext[1]);
-                if ($ex != "jpg") @unlink($estructura . "$idReg.jpg");
-                if ($ex != "png") @unlink($estructura . "$idReg.png");
-                if ($ex != "gif") @unlink($estructura . "$idReg.gif");
+                $ex = strtolower($ext[1]);
+                if ($ex != "jpg") {
+                    @unlink($estructura . "$idReg.jpg");
+                }
+
+                if ($ex != "png") {
+                    @unlink($estructura . "$idReg.png");
+                }
+
+                if ($ex != "gif") {
+                    @unlink($estructura . "$idReg.gif");
+                }
+
             } else {
             }
         }
@@ -1351,6 +1406,4 @@ Metodos para manejo de estructuras editables
         }
         return $id;
     }
-
-
 }

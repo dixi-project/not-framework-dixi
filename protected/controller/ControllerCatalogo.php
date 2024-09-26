@@ -1,7 +1,7 @@
 <?php
 class ControllerCatalogo extends Controller
 {
-    function __construct($view, $conf, $var, $acc)
+    public function __construct($view, $conf, $var, $acc)
     {
         parent::__construct($view, $conf, $var, $acc);
     }
@@ -11,7 +11,7 @@ class ControllerCatalogo extends Controller
         $dat = explode("/", $this->data["con"]);
         $dominio = $dat[1];
         $this->data["activeRol"] = "sfActive";
-        $structure = indexModel::bd($this->conf)->getEstructuraTable($dominio)["structure"];
+        $structure = indexModel::bd($this->conf)->getEstructuraTable($dominio)[0]["structure"];
         $this->data["isImg"] = $structure["img"];
         $this->data["dominio"] = $dominio;
         $this->data["campos"] = indexModel::bd($this->conf)->getcamposAjax($dominio, "REPORT");
