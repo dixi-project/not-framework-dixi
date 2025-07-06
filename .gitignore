@@ -13,6 +13,7 @@ docs/*
 *.m4v
 *.mp4
 ._*
+design
 design/*
 .idea
 includes/files/*
